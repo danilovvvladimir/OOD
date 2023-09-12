@@ -3,7 +3,7 @@ import { FlyNoWayBehavior } from "../FlyBehaviors/FlyNoWayBehavior";
 import { SqueakBehavior } from "../QuackBehaviors/SqueakBehavior";
 import { Duck } from "./Duck";
 
-export class MallardDuck extends Duck {
+export class RubberDuck extends Duck {
   constructor() {
     super(new FlyNoWayBehavior(), new SqueakBehavior(), new NoDanceBehavior());
   }

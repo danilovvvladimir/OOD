@@ -10,6 +10,7 @@
   },
   "ignorePatterns": ["dist/**/*", "webpack.config.js"],
   "rules": {
+    "@typescript-eslint/no-namespace": "off",
     "prettier/prettier": [
       "error",
       {
