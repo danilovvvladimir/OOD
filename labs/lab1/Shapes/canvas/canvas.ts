@@ -25,11 +25,9 @@ export class Canvas implements ICanvas {
     console.log(`Created line to ${point.toString()}`);
   }
 
-  printText(left: Point, top: Point, size: number, text: string): void {
+  printText(leftTop: Point, size: number, text: string): void {
     console.log(
-      `Text printed at ${
-        (left.toString(), top.toString())
-      }, size: ${size}, text: ${text}`,
+      `Text printed at ${leftTop.toString()}, size: ${size}, text: ${text}`,
     );
   }
 

@@ -3,14 +3,24 @@ import { ICanvas } from "../canvas/canvas";
 import { IDrawingStrategy } from "../drawingStrategy/drawingStrategy";
 
 namespace Shapes {
+  export class PictureLogger {
+    printList(shapeMaps: IShapeMap[]) {
+      for (let i = 0; i < shapeMaps.length; i++) {
+        console.log(
+          i + 1,
+          shapeMaps[i].id,
+          shapeMaps[i].shape.getDrawingStrategyDetails(),
+        );
+      }
+    }
+  }
+
   export class Shape {
     private color: string;
     private drawingStategy: IDrawingStrategy;
 
-    // constructor(drawingStrategy: IDrawingStrategy, color: string) {
     constructor(drawingStrategy: IDrawingStrategy) {
       this.drawingStategy = drawingStrategy;
-      // this.color = color;
     }
 
     setColor(color: string) {
@@ -25,29 +35,46 @@ namespace Shapes {
       this.drawingStategy = newDrawingStategy;
     }
 
+    getDrawingStrategyDetails() {
+      return this.drawingStategy.details;
+    }
+
     draw(canvas: ICanvas) {
       this.drawingStategy.draw(canvas);
     }
   }
 
-  export interface shapeMap {
+  export interface IShapeMap {
     id: string;
     shape: Shape;
   }
 
   export class Picture {
-    private shapes: shapeMap[] = [];
+    private shapes: IShapeMap[] = [];
     private canvas: ICanvas;
+    private logger: PictureLogger = new PictureLogger();
 
     constructor(canvas: ICanvas) {
       this.canvas = canvas;
     }
 
     addShape(id: string, drawingStategy: IDrawingStrategy): void {
+      if (this.shapes.find((s) => s.id === id)) {
+        throw new Error("Shape with this id is already exist");
+      }
+
       this.shapes.push({
         id,
         shape: new Shape(drawingStategy),
       });
+    }
+
+    deleteShape(id: string) {
+      this.shapes = this.shapes.filter((sm) => sm.id !== id);
+    }
+
+    list() {
+      this.logger.printList(this.shapes);
     }
 
     drawPicture() {

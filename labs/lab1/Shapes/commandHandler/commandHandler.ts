@@ -1,21 +1,34 @@
 import {
   CircleDetails,
-  IShapeDetails,
   LineDetails,
   RectangleDetails,
-  ShapeDetails,
   TextDetails,
   TriangleDetails,
 } from "../details/details";
-import { RectangleDrawingStrategy } from "../drawingStrategy/drawingStrategy";
+import {
+  CircleDrawingStrategy,
+  IDrawingStrategy,
+  LineDrawingStrategy,
+  RectangleDrawingStrategy,
+  TextDrawingStrategy,
+  TriangleDrawingStrategy,
+} from "../drawingStrategy/drawingStrategy";
 import { Point } from "../point/point";
 import { Picture } from "../shapes/shapes";
 
 namespace CommandHandlers {
   export class ShapeDetailsParser {
+    private rectangleDetailsLength = 5;
+    private circleDetailsLength = 4;
+    private trinagleDetailsLength = 7;
+    private lineDetailsLength = 3;
+    private textDetailsLength = 5;
+
     parseRectangleDetails(unparsedDetails: string[]): RectangleDetails {
-      if (unparsedDetails.length != 5) {
-        throw new Error("Details length for rectangle must be 5");
+      if (unparsedDetails.length != this.rectangleDetailsLength) {
+        throw new Error(
+          `Details length for rectangle must be ${this.rectangleDetailsLength}`,
+        );
       }
 
       const leftTop = new Point(+unparsedDetails[1], +unparsedDetails[2]);
@@ -42,8 +55,10 @@ namespace CommandHandlers {
     }
 
     parseCircleDetails(unparsedDetails: string[]): CircleDetails {
-      if (unparsedDetails.length != 4) {
-        throw new Error("Details length for rectangle must be 4");
+      if (unparsedDetails.length != this.circleDetailsLength) {
+        throw new Error(
+          `Details length for circle must be ${this.circleDetailsLength}`,
+        );
       }
 
       const center = new Point(+unparsedDetails[1], +unparsedDetails[2]);
@@ -64,8 +79,10 @@ namespace CommandHandlers {
     }
 
     parseTriangleDetails(unparsedDetails: string[]): TriangleDetails {
-      if (unparsedDetails.length != 7) {
-        throw new Error("Details length for rectangle must be 7");
+      if (unparsedDetails.length != this.trinagleDetailsLength) {
+        throw new Error(
+          `Details length for triangle must be ${this.trinagleDetailsLength}`,
+        );
       }
 
       const firstVertex = new Point(+unparsedDetails[1], +unparsedDetails[2]);
@@ -105,8 +122,10 @@ namespace CommandHandlers {
     }
 
     parseLineDetails(unparsedDetails: string[]): LineDetails {
-      if (unparsedDetails.length != 3) {
-        throw new Error("Details length for rectangle must be 3");
+      if (unparsedDetails.length != this.lineDetailsLength) {
+        throw new Error(
+          `Details length for triangle must be ${this.lineDetailsLength}`,
+        );
       }
 
       const from = new Point(+unparsedDetails[1], +unparsedDetails[2]);
@@ -127,8 +146,10 @@ namespace CommandHandlers {
     }
 
     parseTextDetails(unparsedDetails: string[]): TextDetails {
-      if (unparsedDetails.length != 5) {
-        throw new Error("Details length for rectangle must be 5");
+      if (unparsedDetails.length != this.textDetailsLength) {
+        throw new Error(
+          `Details length for triangle must be ${this.textDetailsLength}`,
+        );
       }
 
       const leftTop = new Point(+unparsedDetails[1], +unparsedDetails[2]);
@@ -149,21 +170,27 @@ namespace CommandHandlers {
       };
     }
 
-    parse(details: string[]): ShapeDetails {
+    parse(details: string[]): IDrawingStrategy {
       const shapeType = details[0];
       const shapeDetails = details.slice(1);
 
       switch (shapeType) {
         case "rectangle":
-          return this.parseRectangleDetails(shapeDetails);
+          return new RectangleDrawingStrategy(
+            this.parseRectangleDetails(shapeDetails),
+          );
         case "circle":
-          return this.parseCircleDetails(shapeDetails);
+          return new CircleDrawingStrategy(
+            this.parseCircleDetails(shapeDetails),
+          );
         case "triangle":
-          return this.parseTriangleDetails(shapeDetails);
+          return new TriangleDrawingStrategy(
+            this.parseTriangleDetails(shapeDetails),
+          );
         case "line":
-          return this.parseLineDetails(shapeDetails);
+          return new LineDrawingStrategy(this.parseLineDetails(shapeDetails));
         case "text":
-          return this.parseTextDetails(shapeDetails);
+          return new TextDrawingStrategy(this.parseTextDetails(shapeDetails));
 
         default:
           throw new Error("unknown type of shape");
@@ -173,11 +200,10 @@ namespace CommandHandlers {
 
   export class CommandHandler {
     private picture: Picture;
-    private shapeDetailsParser: ShapeDetailsParser;
+    private shapeDetailsParser: ShapeDetailsParser = new ShapeDetailsParser();
 
-    constructor(picture: Picture, shapeDetailsParser: ShapeDetailsParser) {
+    constructor(picture: Picture) {
       this.picture = picture;
-      this.shapeDetailsParser = shapeDetailsParser;
     }
 
     validateCommandLine(commandLine: string) {
@@ -186,26 +212,28 @@ namespace CommandHandlers {
 
     handle(commandLine: string) {
       const commandItems = this.validateCommandLine(commandLine).split(" ");
-      const id = commandLine[1];
-
       switch (commandItems[0]) {
         case "addshape":
-          const parsedDetails: ShapeDetails = this.shapeDetailsParser.parse(
-            commandItems.slice(2),
-          );
+          const drawingStrategy: IDrawingStrategy =
+            this.shapeDetailsParser.parse(commandItems.slice(2));
 
-          this.picture.addShape(id, new RectangleDrawingStrategy(ShapeDetails));
+          this.picture.addShape(commandItems[1], drawingStrategy);
+          break;
+
+        case "list":
+          this.picture.list();
+          break;
+
+        case "deleteshape":
+          this.picture.deleteShape(commandItems[1]);
           break;
 
         case "drawpicture":
-          console.log("drawpicture drawpicture drawpicture");
-
           this.picture.drawPicture();
           break;
 
         default:
-          console.log("Unkown command");
-
+          console.log("Unknown command");
           break;
       }
     }
