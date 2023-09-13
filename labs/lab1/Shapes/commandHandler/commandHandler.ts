@@ -21,7 +21,7 @@ namespace CommandHandlers {
     private rectangleDetailsLength = 5;
     private circleDetailsLength = 4;
     private trinagleDetailsLength = 7;
-    private lineDetailsLength = 3;
+    private lineDetailsLength = 5;
     private textDetailsLength = 5;
 
     parseRectangleDetails(unparsedDetails: string[]): RectangleDetails {
@@ -124,7 +124,7 @@ namespace CommandHandlers {
     parseLineDetails(unparsedDetails: string[]): LineDetails {
       if (unparsedDetails.length != this.lineDetailsLength) {
         throw new Error(
-          `Details length for triangle must be ${this.lineDetailsLength}`,
+          `Details length for line must be ${this.lineDetailsLength}`,
         );
       }
 
@@ -146,9 +146,9 @@ namespace CommandHandlers {
     }
 
     parseTextDetails(unparsedDetails: string[]): TextDetails {
-      if (unparsedDetails.length != this.textDetailsLength) {
+      if (unparsedDetails.length < this.textDetailsLength) {
         throw new Error(
-          `Details length for triangle must be ${this.textDetailsLength}`,
+          `Details length for text must be at least${this.textDetailsLength}`,
         );
       }
 
@@ -166,7 +166,7 @@ namespace CommandHandlers {
         leftTop,
         fontSize,
         color: unparsedDetails[0],
-        text: unparsedDetails[4],
+        text: unparsedDetails.slice(4).join(" "),
       };
     }
 

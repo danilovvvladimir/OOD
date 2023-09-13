@@ -14,6 +14,7 @@ export type DrawingStrategyType = RectangleDrawingStrategy;
 export interface IDrawingStrategy {
   details: ShapeDetails;
   draw(canvas: ICanvas): void;
+  toString(): string;
 }
 
 export class RectangleDrawingStrategy implements IDrawingStrategy {
@@ -21,6 +22,20 @@ export class RectangleDrawingStrategy implements IDrawingStrategy {
 
   constructor(details: RectangleDetails) {
     this.details = details;
+  }
+
+  toString() {
+    const finalString =
+      "rectangle - color:" +
+      this.details.color +
+      " - leftTop: " +
+      this.details.leftTop.toString() +
+      " - height: " +
+      this.details.height +
+      " - width: " +
+      this.details.width;
+
+    return finalString;
   }
 
   draw(canvas: ICanvas): void {
@@ -46,6 +61,18 @@ export class CircleDrawingStrategy implements IDrawingStrategy {
     this.details = details;
   }
 
+  toString() {
+    const finalString =
+      "circle - color:" +
+      this.details.color +
+      " - center: " +
+      this.details.center.toString() +
+      " - radius: " +
+      this.details.radius;
+
+    return finalString;
+  }
+
   draw(canvas: ICanvas): void {
     const { color, center, radius } = this.details;
 
@@ -60,6 +87,20 @@ export class TriangleDrawingStrategy implements IDrawingStrategy {
 
   constructor(details: TriangleDetails) {
     this.details = details;
+  }
+
+  toString() {
+    const finalString =
+      "triangle - color:" +
+      this.details.color +
+      " - firstVertex: " +
+      this.details.firstVertex.toString() +
+      " - secondVertex: " +
+      this.details.secondVertex.toString() +
+      " - thirdVertex: " +
+      this.details.thirdVertex.toString();
+
+    return finalString;
   }
 
   draw(canvas: ICanvas): void {
@@ -80,6 +121,18 @@ export class LineDrawingStrategy implements IDrawingStrategy {
     this.details = details;
   }
 
+  toString() {
+    const finalString =
+      "line - color:" +
+      this.details.color +
+      " - from: " +
+      this.details.from.toString() +
+      " - to: " +
+      this.details.to.toString();
+
+    return finalString;
+  }
+
   draw(canvas: ICanvas): void {
     const { color, from, to } = this.details;
 
@@ -94,6 +147,20 @@ export class TextDrawingStrategy implements IDrawingStrategy {
 
   constructor(details: TextDetails) {
     this.details = details;
+  }
+
+  toString() {
+    const finalString =
+      "text - color:" +
+      this.details.color +
+      " - from: " +
+      this.details.leftTop.toString() +
+      " - fontSize: " +
+      this.details.fontSize +
+      " - text: " +
+      this.details.text;
+
+    return finalString;
   }
 
   draw(canvas: ICanvas): void {

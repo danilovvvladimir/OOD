@@ -9,7 +9,7 @@ namespace Shapes {
         console.log(
           i + 1,
           shapeMaps[i].id,
-          shapeMaps[i].shape.getDrawingStrategyDetails(),
+          shapeMaps[i].shape.getDrawingStrategyInfo(),
         );
       }
     }
@@ -35,8 +35,8 @@ namespace Shapes {
       this.drawingStategy = newDrawingStategy;
     }
 
-    getDrawingStrategyDetails() {
-      return this.drawingStategy.details;
+    getDrawingStrategyInfo() {
+      return this.drawingStategy.toString();
     }
 
     draw(canvas: ICanvas) {
