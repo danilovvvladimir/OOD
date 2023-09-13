@@ -13,6 +13,13 @@ const commandHandler = new CommandHandler(picture);
 // AddShape txt1 text #ffaa88 100.3 100.2 12.8 Hello world
 // AddShape ln1 line #fefefe 10 20 35 -88
 
+// Сделать чтобы можно быть changeshape без замены цвета.
+// Для этого парсинг drawingstrategy тоже без цвета
+
+// в details не хранить цвет???
+// !!!!! хранить details: {color: string, points: Point[]}
+// - у прямоугольника на моменте парсинга находим rightBottom
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,

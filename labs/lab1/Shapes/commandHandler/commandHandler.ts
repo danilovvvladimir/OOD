@@ -207,17 +207,17 @@ namespace CommandHandlers {
     }
 
     validateCommandLine(commandLine: string) {
-      return commandLine.toLowerCase();
+      return commandLine.toLowerCase().trim();
     }
 
     handle(commandLine: string) {
       const commandItems = this.validateCommandLine(commandLine).split(" ");
       switch (commandItems[0]) {
         case "addshape":
-          const drawingStrategy: IDrawingStrategy =
-            this.shapeDetailsParser.parse(commandItems.slice(2));
-
-          this.picture.addShape(commandItems[1], drawingStrategy);
+          this.picture.addShape(
+            commandItems[1],
+            this.shapeDetailsParser.parse(commandItems.slice(2)),
+          );
           break;
 
         case "list":
@@ -230,6 +230,21 @@ namespace CommandHandlers {
 
         case "drawpicture":
           this.picture.drawPicture();
+          break;
+
+        case "drawshape":
+          this.picture.drawShape(commandItems[1]);
+          break;
+
+        case "changeshape":
+          this.picture.changeShape(
+            commandItems[1],
+            this.shapeDetailsParser.parse(commandItems.slice(2)),
+          );
+          break;
+
+        case "changecolor":
+          this.picture.changeColor("id", "color");
           break;
 
         default:

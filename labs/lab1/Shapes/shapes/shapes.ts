@@ -16,7 +16,6 @@ namespace Shapes {
   }
 
   export class Shape {
-    private color: string;
     private drawingStategy: IDrawingStrategy;
 
     constructor(drawingStrategy: IDrawingStrategy) {
@@ -24,11 +23,11 @@ namespace Shapes {
     }
 
     setColor(color: string) {
-      this.color = color;
+      this.drawingStategy.details.color = color;
     }
 
     getColor() {
-      return this.color;
+      return this.drawingStategy.details.color;
     }
 
     setDrawingStrategy(newDrawingStategy: IDrawingStrategy) {
@@ -58,8 +57,12 @@ namespace Shapes {
       this.canvas = canvas;
     }
 
+    private findShapeById(id: string) {
+      return this.shapes.find((sm) => sm.id === id);
+    }
+
     addShape(id: string, drawingStategy: IDrawingStrategy): void {
-      if (this.shapes.find((s) => s.id === id)) {
+      if (this.findShapeById(id)) {
         throw new Error("Shape with this id is already exist");
       }
 
@@ -79,6 +82,36 @@ namespace Shapes {
 
     drawPicture() {
       this.shapes.forEach((item) => item.shape.draw(this.canvas));
+    }
+
+    drawShape(id: string) {
+      const shapeMap = this.findShapeById(id);
+
+      if (!shapeMap) {
+        throw new Error("Shape with this id doesn't exist");
+      }
+
+      shapeMap.shape.draw(this.canvas);
+    }
+
+    changeShape(id: string, newDrawingStategy: IDrawingStrategy) {
+      const shapeMap = this.findShapeById(id);
+
+      if (!shapeMap) {
+        throw new Error("Shape with this id doesn't exist");
+      }
+
+      shapeMap.shape.setDrawingStrategy(newDrawingStategy);
+    }
+
+    changeColor(id: string, newColor: string) {
+      const shapeMap = this.findShapeById(id);
+
+      if (!shapeMap) {
+        throw new Error("Shape with this id doesn't exist");
+      }
+
+      shapeMap.shape.setColor(newColor);
     }
   }
 }
