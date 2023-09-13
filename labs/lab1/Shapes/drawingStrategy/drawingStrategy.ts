@@ -29,27 +29,21 @@ export class RectangleDrawingStrategy implements IDrawingStrategy {
       "rectangle - color:" +
       this.details.color +
       " - leftTop: " +
-      this.details.leftTop.toString() +
-      " - height: " +
-      this.details.height +
-      " - width: " +
-      this.details.width;
+      this.details.controlPoints[0].toString() +
+      " - rightBottom: " +
+      this.details.controlPoints[1].toString();
 
     return finalString;
   }
 
   draw(canvas: ICanvas): void {
-    const { color, height, leftTop, width } = this.details;
+    const { color, controlPoints } = this.details;
 
-    const rightBottom = new Point(
-      leftTop.getX() + width,
-      leftTop.getY() - height,
-    );
-    canvas.moveTo(leftTop);
-    canvas.lineTo(new Point(rightBottom.getX(), leftTop.getY()));
-    canvas.lineTo(new Point(rightBottom.getX(), rightBottom.getY()));
-    canvas.lineTo(new Point(leftTop.getX(), rightBottom.getY()));
-    canvas.lineTo(leftTop);
+    canvas.moveTo(controlPoints[0]);
+    canvas.lineTo(new Point(controlPoints[1].getX(), controlPoints[0].getY()));
+    canvas.lineTo(new Point(controlPoints[1].getX(), controlPoints[1].getY()));
+    canvas.lineTo(new Point(controlPoints[0].getX(), controlPoints[1].getY()));
+    canvas.lineTo(controlPoints[0]);
     canvas.setColor(color);
   }
 }
@@ -66,7 +60,7 @@ export class CircleDrawingStrategy implements IDrawingStrategy {
       "circle - color:" +
       this.details.color +
       " - center: " +
-      this.details.center.toString() +
+      this.details.controlPoints[0].toString() +
       " - radius: " +
       this.details.radius;
 
@@ -74,10 +68,9 @@ export class CircleDrawingStrategy implements IDrawingStrategy {
   }
 
   draw(canvas: ICanvas): void {
-    const { color, center, radius } = this.details;
+    const { color, controlPoints, radius } = this.details;
 
-    canvas.moveTo(center);
-    canvas.drawEllipse(center, radius, radius);
+    canvas.drawEllipse(controlPoints[0], radius, radius);
     canvas.setColor(color);
   }
 }
@@ -94,22 +87,22 @@ export class TriangleDrawingStrategy implements IDrawingStrategy {
       "triangle - color:" +
       this.details.color +
       " - firstVertex: " +
-      this.details.firstVertex.toString() +
+      this.details.controlPoints[0].toString() +
       " - secondVertex: " +
-      this.details.secondVertex.toString() +
+      this.details.controlPoints[1].toString() +
       " - thirdVertex: " +
-      this.details.thirdVertex.toString();
+      this.details.controlPoints[2].toString();
 
     return finalString;
   }
 
   draw(canvas: ICanvas): void {
-    const { color, firstVertex, secondVertex, thirdVertex } = this.details;
+    const { color, controlPoints } = this.details;
 
-    canvas.moveTo(firstVertex);
-    canvas.lineTo(secondVertex);
-    canvas.lineTo(thirdVertex);
-    canvas.lineTo(firstVertex);
+    canvas.moveTo(controlPoints[0]);
+    canvas.lineTo(controlPoints[1]);
+    canvas.lineTo(controlPoints[2]);
+    canvas.lineTo(controlPoints[0]);
     canvas.setColor(color);
   }
 }
@@ -126,18 +119,18 @@ export class LineDrawingStrategy implements IDrawingStrategy {
       "line - color:" +
       this.details.color +
       " - from: " +
-      this.details.from.toString() +
+      this.details.controlPoints[0].toString() +
       " - to: " +
-      this.details.to.toString();
+      this.details.controlPoints[1].toString();
 
     return finalString;
   }
 
   draw(canvas: ICanvas): void {
-    const { color, from, to } = this.details;
+    const { color, controlPoints } = this.details;
 
-    canvas.moveTo(from);
-    canvas.lineTo(to);
+    canvas.moveTo(controlPoints[0]);
+    canvas.lineTo(controlPoints[1]);
     canvas.setColor(color);
   }
 }
@@ -153,8 +146,8 @@ export class TextDrawingStrategy implements IDrawingStrategy {
     const finalString =
       "text - color:" +
       this.details.color +
-      " - from: " +
-      this.details.leftTop.toString() +
+      " - leftTop: " +
+      this.details.controlPoints[0].toString() +
       " - fontSize: " +
       this.details.fontSize +
       " - text: " +
@@ -164,10 +157,10 @@ export class TextDrawingStrategy implements IDrawingStrategy {
   }
 
   draw(canvas: ICanvas): void {
-    const { color, fontSize, leftTop, text } = this.details;
+    const { color, fontSize, controlPoints, text } = this.details;
 
-    canvas.moveTo(leftTop);
-    canvas.printText(leftTop, fontSize, text);
+    canvas.moveTo(controlPoints[0]);
+    canvas.printText(controlPoints[0], fontSize, text);
     canvas.setColor(color);
   }
 }

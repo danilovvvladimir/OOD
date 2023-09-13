@@ -38,6 +38,10 @@ namespace Shapes {
       return this.drawingStategy.toString();
     }
 
+    getControlPoints() {
+      return this.drawingStategy.details.controlPoints;
+    }
+
     draw(canvas: ICanvas) {
       this.drawingStategy.draw(canvas);
     }
@@ -112,6 +116,28 @@ namespace Shapes {
       }
 
       shapeMap.shape.setColor(newColor);
+    }
+
+    moveShape(id: string, dx: number, dy: number) {
+      const shapeMap = this.findShapeById(id);
+
+      if (!shapeMap) {
+        throw new Error("Shape with this id doesn't exist");
+      }
+
+      shapeMap.shape.getControlPoints().forEach((cp) => {
+        cp.setY(cp.getY() + dy);
+        cp.setX(cp.getX() + dx);
+      });
+    }
+
+    movePicture(dx: number, dy: number) {
+      this.shapes.forEach((sm) => {
+        sm.shape.getControlPoints().forEach((cp) => {
+          cp.setY(cp.getY() + dy);
+          cp.setX(cp.getX() + dx);
+        });
+      });
     }
   }
 }

@@ -6,76 +6,53 @@ export interface IShapeDetails {
 
 export abstract class ShapeDetails implements IShapeDetails {
   color: string;
+  controlPoints: Point[];
 
-  constructor(color: string) {
+  constructor(color: string, controlPoints: Point[]) {
     this.color = color;
+    this.controlPoints = controlPoints;
   }
 }
 
 export class RectangleDetails extends ShapeDetails {
-  leftTop: Point;
-  width: number;
-  height: number;
-
-  constructor(leftTop: Point, width: number, height: number, color: string) {
-    super(color);
-    this.height = height;
-    this.width = width;
-    this.leftTop = leftTop;
+  constructor(leftTop: Point, rightBottom: Point, color: string) {
+    super(color, [leftTop, rightBottom]);
   }
 }
 
 export class CircleDetails extends ShapeDetails {
-  center: Point;
   radius: number;
 
   constructor(center: Point, radius: number, color: string) {
-    super(color);
-    this.center = center;
+    super(color, [center]);
     this.radius = radius;
   }
 }
 
 export class TriangleDetails extends ShapeDetails {
-  firstVertex: Point;
-  secondVertex: Point;
-  thirdVertex: Point;
-
   constructor(
     firstVertex: Point,
     secondVertex: Point,
     thirdVertex: Point,
     color: string,
   ) {
-    super(color);
-
-    this.firstVertex = firstVertex;
-    this.secondVertex = secondVertex;
-    this.thirdVertex = thirdVertex;
+    super(color, [firstVertex, secondVertex, thirdVertex]);
   }
 }
 
 export class LineDetails extends ShapeDetails {
-  from: Point;
-  to: Point;
-
   constructor(from: Point, to: Point, color: string) {
-    super(color);
-
-    this.from = from;
-    this.to = to;
+    super(color, [from, to]);
   }
 }
 
 export class TextDetails extends ShapeDetails {
-  leftTop: Point;
   fontSize: number;
   text: string;
 
   constructor(leftTop: Point, fontSize: number, text: string, color: string) {
-    super(color);
+    super(color, [leftTop]);
 
-    this.leftTop = leftTop;
     this.fontSize = fontSize;
     this.text = text;
   }
