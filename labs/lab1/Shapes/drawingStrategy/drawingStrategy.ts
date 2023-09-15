@@ -159,8 +159,6 @@ export class TextDrawingStrategy implements IDrawingStrategy {
   draw(canvas: ICanvas): void {
     const { color, fontSize, controlPoints, text } = this.details;
 
-    canvas.moveTo(controlPoints[0]);
-    canvas.printText(controlPoints[0], fontSize, text);
-    canvas.setColor(color);
+    canvas.printText(controlPoints[0], fontSize, text, color);
   }
 }

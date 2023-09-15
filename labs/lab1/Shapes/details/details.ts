@@ -25,6 +25,7 @@ export class CircleDetails extends ShapeDetails {
 
   constructor(center: Point, radius: number, color: string) {
     super(color, [center]);
+
     this.radius = radius;
   }
 }

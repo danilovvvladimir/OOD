@@ -51,7 +51,7 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [leftTop, rightBottom],
-      color: unparsedDetails[0],
+      color: this.validateHex(unparsedDetails[0]),
     };
   }
 
@@ -74,7 +74,7 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [center],
-      color: unparsedDetails[0],
+      color: this.validateHex(unparsedDetails[0]),
       radius,
     };
   }
@@ -104,7 +104,7 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [firstVertex, secondVertex, thirdVertex],
-      color: unparsedDetails[0],
+      color: this.validateHex(unparsedDetails[0]),
     };
   }
 
@@ -127,7 +127,7 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [from, to],
-      color: unparsedDetails[0],
+      color: this.validateHex(unparsedDetails[0]),
     };
   }
 
@@ -151,9 +151,51 @@ class ShapeDetailsParser {
     return {
       controlPoints: [leftTop],
       fontSize,
-      color: unparsedDetails[0],
+      color: this.validateHex(unparsedDetails[0]),
       text: unparsedDetails.slice(4).join(" "),
     };
+  }
+
+  validateIdParam(possibleId: unknown) {
+    if (typeof possibleId !== "string") {
+      throw new Error("ID must be a string");
+    }
+
+    return possibleId;
+  }
+
+  validateColorParam(possibleColor: unknown) {
+    if (typeof possibleColor !== "string") {
+      throw new Error("ID must be a string");
+    }
+
+    return this.validateHex(possibleColor);
+  }
+
+  validateHex(possibleHexColor: string) {
+    const hexColorRegex = /^#[0-9A-Fa-f]{6}$/;
+
+    if (!hexColorRegex.test(possibleHexColor)) {
+      throw new Error(
+        "Invalid hex color format. It should be in the format #RRGGBB.",
+      );
+    }
+
+    return possibleHexColor;
+  }
+
+  validateShiftParam(possibleShiftParam: unknown) {
+    if (typeof possibleShiftParam === "string") {
+      const parsedShiftParam = parseInt(possibleShiftParam, 10);
+
+      if (Number.isNaN(parsedShiftParam)) {
+        throw new Error("DX or DY must valid number");
+      }
+
+      return parsedShiftParam;
+    } else {
+      throw new Error("DX or DY must exist");
+    }
   }
 
   parse(details: string[]): IDrawingStrategy {

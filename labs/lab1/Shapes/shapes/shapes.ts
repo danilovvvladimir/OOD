@@ -1,53 +1,36 @@
 import { ICanvas } from "../canvas/canvas";
-
 import { IDrawingStrategy } from "../drawingStrategy/drawingStrategy";
 
-namespace Shapes {
-  export class PictureLogger {
-    printList(shapeMaps: IShapeMap[]) {
-      for (let i = 0; i < shapeMaps.length; i++) {
-        console.log(
-          i + 1,
-          shapeMaps[i].id,
-          shapeMaps[i].shape.getDrawingStrategyInfo(),
-        );
-      }
-    }
-  }
-
-  export class Shape {
-    private drawingStategy: IDrawingStrategy;
-
-    constructor(drawingStrategy: IDrawingStrategy) {
-      this.drawingStategy = drawingStrategy;
-    }
+export namespace Shapes {
+  class Shape {
+    constructor(private drawingStrategy: IDrawingStrategy) {}
 
     setColor(color: string) {
-      this.drawingStategy.details.color = color;
+      this.drawingStrategy.details.color = color;
     }
 
     getColor() {
-      return this.drawingStategy.details.color;
+      return this.drawingStrategy.details.color;
     }
 
     setDrawingStrategy(newDrawingStategy: IDrawingStrategy) {
-      this.drawingStategy = newDrawingStategy;
+      this.drawingStrategy = newDrawingStategy;
     }
 
     getDrawingStrategyInfo() {
-      return this.drawingStategy.toString();
+      return this.drawingStrategy.toString();
     }
 
     getControlPoints() {
-      return this.drawingStategy.details.controlPoints;
+      return this.drawingStrategy.details.controlPoints;
     }
 
     draw(canvas: ICanvas) {
-      this.drawingStategy.draw(canvas);
+      this.drawingStrategy.draw(canvas);
     }
   }
 
-  export interface IShapeMap {
+  interface IShapeMap {
     id: string;
     shape: Shape;
   }
@@ -55,7 +38,6 @@ namespace Shapes {
   export class Picture {
     private shapes: IShapeMap[] = [];
     private canvas: ICanvas;
-    private logger: PictureLogger = new PictureLogger();
 
     constructor(canvas: ICanvas) {
       this.canvas = canvas;
@@ -81,7 +63,19 @@ namespace Shapes {
     }
 
     list() {
-      this.logger.printList(this.shapes);
+      let stringList = "";
+      for (let i = 0; i < this.shapes.length; i++) {
+        stringList =
+          stringList +
+          (i + 1) +
+          " " +
+          this.shapes[i].id +
+          " " +
+          this.shapes[i].shape.getDrawingStrategyInfo() +
+          "\n";
+      }
+
+      return stringList;
     }
 
     drawPicture() {
@@ -141,5 +135,3 @@ namespace Shapes {
     }
   }
 }
-
-export = Shapes;
