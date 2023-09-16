@@ -5,6 +5,8 @@
 	передаваемого Наблюдателю в метод Update
 */
 
+import { IObservable } from "../observable/observable";
+
 export interface IObserver<T> {
-  update(data: T): void;
+  update(data: T, observable: IObservable<T>): void;
 }

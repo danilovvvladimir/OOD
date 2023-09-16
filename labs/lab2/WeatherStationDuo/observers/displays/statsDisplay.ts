@@ -1,13 +1,14 @@
-import { WeatherInfo } from "../../observable/weatherData";
+import { IObservable } from "../../observable/observable";
+import { WeatherData, WeatherInfo } from "../../observable/weatherData";
 import { IObserver } from "../IObserver";
 
-export interface Stats {
+interface Stats {
   max: number;
   min: number;
   average: number;
 }
 
-export class StatsData {
+class StatsData {
   private min = Number.MAX_SAFE_INTEGER;
   private max = Number.MIN_SAFE_INTEGER;
   private accumulated = 0;
@@ -35,28 +36,64 @@ export class StatsData {
   }
 }
 
+class StatsDataContainer {
+  temperatureStats = new StatsData();
+  humidityStats = new StatsData();
+  pressureStats = new StatsData();
+}
+
 export class StatsDisplay implements IObserver<WeatherInfo> {
-  private temperatureData: StatsData = new StatsData();
-  private humidityData: StatsData = new StatsData();
-  private pressureData: StatsData = new StatsData();
+  private outputStream: NodeJS.WriteStream;
+  private dataInContainer: StatsDataContainer;
+  private dataOutContainer: StatsDataContainer;
+  private weatherDataIn: WeatherData;
+  private weatherDataOut: WeatherData;
 
-  update(data: WeatherInfo): void {
-    this.temperatureData.update(data.temperature);
-    this.humidityData.update(data.humidity);
-    this.pressureData.update(data.pressure);
-
-    this.printStats(this.temperatureData, "Temparature");
-    this.printStats(this.humidityData, "Humidity");
-    this.printStats(this.pressureData, "Pressure");
+  constructor(
+    weatherDataIn: WeatherData,
+    weatherDataOut: WeatherData,
+    outputStream: NodeJS.WriteStream,
+  ) {
+    this.weatherDataIn = weatherDataIn;
+    this.weatherDataOut = weatherDataOut;
+    this.outputStream = outputStream;
+    this.dataInContainer = new StatsDataContainer();
+    this.dataOutContainer = new StatsDataContainer();
   }
 
-  public printStats(statsData: StatsData, header: string) {
+  public update(data: WeatherInfo, observable: IObservable<WeatherInfo>): void {
+    if (observable === this.weatherDataIn) {
+      this.dataInContainer.temperatureStats.update(data.temperature);
+      this.dataInContainer.humidityStats.update(data.humidity);
+      this.dataInContainer.pressureStats.update(data.pressure);
+
+      this.printData(this.dataInContainer, "IN");
+    }
+
+    if (observable === this.weatherDataOut) {
+      this.dataOutContainer.temperatureStats.update(data.temperature);
+      this.dataOutContainer.humidityStats.update(data.humidity);
+      this.dataOutContainer.pressureStats.update(data.pressure);
+
+      this.printData(this.dataOutContainer, "OUT");
+    }
+  }
+
+  private printStats(statsData: StatsData, header: string) {
     const stats = statsData.getStats();
 
-    console.log(`=> ${header}`);
-    console.log(`Min: ${stats.min}`);
-    console.log(`Max: ${stats.max}`);
-    console.log(`Average: ${stats.average}`);
-    console.log("-----------");
+    this.outputStream.write(`=> ${header}\n`);
+    this.outputStream.write(`Min: ${stats.min}\n`);
+    this.outputStream.write(`Max: ${stats.max}\n`);
+    this.outputStream.write(`Average: ${stats.average}\n`);
+    this.outputStream.write("-----------\n");
+  }
+
+  private printData(dataContainer: StatsDataContainer, position: string) {
+    this.outputStream.write("=== CStatsDisplay info ===\n");
+    this.outputStream.write(`Position: ${position}\n`);
+    this.printStats(dataContainer.temperatureStats, "Temperature");
+    this.printStats(dataContainer.humidityStats, "Humidity");
+    this.printStats(dataContainer.pressureStats, "Pressure");
   }
 }

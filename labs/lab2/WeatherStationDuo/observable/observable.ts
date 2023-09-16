@@ -28,7 +28,7 @@ export abstract class Observable<T> implements IObservable<T> {
 
     for (const priority of priorities) {
       observersCopy.get(priority)?.forEach((o) => {
-        o.update(data);
+        o.update(data, this);
       });
     }
   }
