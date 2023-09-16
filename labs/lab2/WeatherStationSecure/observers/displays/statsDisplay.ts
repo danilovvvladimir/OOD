@@ -36,27 +36,37 @@ export class StatsData {
 }
 
 export class StatsDisplay implements IObserver<WeatherInfo> {
+  private outputStream: NodeJS.WriteStream;
   private temperatureData: StatsData = new StatsData();
   private humidityData: StatsData = new StatsData();
   private pressureData: StatsData = new StatsData();
 
-  update(data: WeatherInfo): void {
+  constructor(outputStream: NodeJS.WriteStream) {
+    this.outputStream = outputStream;
+  }
+
+  public update(data: WeatherInfo): void {
     this.temperatureData.update(data.temperature);
     this.humidityData.update(data.humidity);
     this.pressureData.update(data.pressure);
 
+    this.prinAllStats();
+  }
+
+  private prinAllStats() {
+    this.outputStream.write("=== CStatsDisplay info ===\n");
     this.printStats(this.temperatureData, "Temparature");
     this.printStats(this.humidityData, "Humidity");
     this.printStats(this.pressureData, "Pressure");
   }
 
-  public printStats(statsData: StatsData, header: string) {
+  private printStats(statsData: StatsData, header: string) {
     const stats = statsData.getStats();
 
-    console.log(`=> ${header}`);
-    console.log(`Min: ${stats.min}`);
-    console.log(`Max: ${stats.max}`);
-    console.log(`Average: ${stats.average}`);
-    console.log("-----------");
+    this.outputStream.write(`=> ${header}\n`);
+    this.outputStream.write(`Min: ${stats.min}\n`);
+    this.outputStream.write(`Max: ${stats.max}\n`);
+    this.outputStream.write(`Average: ${stats.average}\n`);
+    this.outputStream.write("-----------\n");
   }
 }

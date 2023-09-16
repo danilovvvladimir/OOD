@@ -92,6 +92,7 @@ export class StatsDisplay implements IObserver<WeatherInfo> {
   private printData(dataContainer: StatsDataContainer, position: string) {
     this.outputStream.write("=== CStatsDisplay info ===\n");
     this.outputStream.write(`Position: ${position}\n`);
+
     this.printStats(dataContainer.temperatureStats, "Temperature");
     this.printStats(dataContainer.humidityStats, "Humidity");
     this.printStats(dataContainer.pressureStats, "Pressure");

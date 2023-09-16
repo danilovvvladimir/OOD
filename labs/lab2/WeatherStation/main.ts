@@ -4,10 +4,10 @@ import { StatsDisplay } from "./observers/displays/statsDisplay";
 
 const weatherData = new WeatherData();
 
-const display = new Display();
+const display = new Display(process.stdout);
 weatherData.registerObserver(display);
 
-const statsDisplay = new StatsDisplay();
+const statsDisplay = new StatsDisplay(process.stdout);
 weatherData.registerObserver(statsDisplay);
 
 weatherData.setMeasurements(3, 0.7, 760);

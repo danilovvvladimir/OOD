@@ -10,7 +10,8 @@ weatherData.registerObserver(display, 100);
 const statsDisplay = new StatsDisplay(process.stdout);
 weatherData.registerObserver(statsDisplay, 20);
 
-weatherData.setMeasurements(3, 0.7, 760);
+weatherData.setMeasurements(3, 0.7, 760, 4, 0);
+weatherData.setMeasurements(3, 0.7, 760, 4, 270);
 // weatherData.setMeasurements(4, 0.8, 761);
 
 // weatherData.removeObserver(statsDisplay);
