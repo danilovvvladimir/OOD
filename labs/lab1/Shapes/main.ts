@@ -1,9 +1,11 @@
-import { Canvas, SvgCanvas } from "./canvas/canvas";
+import { SvgCanvas } from "./canvas/canvas";
 import { CommandHandler } from "./commandHandler/commandHandler";
 import { Shapes } from "./shapes/shapes";
 
-const picture = new Shapes.Picture(new SvgCanvas("random-file.svg"));
-// const picture = new Shapes.Picture(new Canvas());
+const picture = new Shapes.Picture(
+  new SvgCanvas(1000, 1000, "random-file.svg"),
+);
+
 const commandHandler = new CommandHandler(
   process.stdin,
   process.stdout,

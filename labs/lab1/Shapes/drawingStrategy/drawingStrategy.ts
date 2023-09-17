@@ -9,8 +9,6 @@ import {
 } from "../details/details";
 import { Point } from "../point/point";
 
-export type DrawingStrategyType = RectangleDrawingStrategy;
-
 export interface IDrawingStrategy {
   details: ShapeDetails;
   draw(canvas: ICanvas): void;
@@ -70,6 +68,7 @@ export class CircleDrawingStrategy implements IDrawingStrategy {
   draw(canvas: ICanvas): void {
     const { color, controlPoints, radius } = this.details;
 
+    canvas.moveTo(controlPoints[0]);
     canvas.drawEllipse(controlPoints[0], radius, radius);
     canvas.setColor(color);
   }

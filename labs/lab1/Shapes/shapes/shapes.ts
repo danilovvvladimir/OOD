@@ -2,7 +2,7 @@ import { ICanvas } from "../canvas/canvas";
 import { IDrawingStrategy } from "../drawingStrategy/drawingStrategy";
 
 export namespace Shapes {
-  class Shape {
+  export class Shape {
     constructor(private drawingStrategy: IDrawingStrategy) {}
 
     setColor(color: string) {
