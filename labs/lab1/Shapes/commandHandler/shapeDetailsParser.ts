@@ -22,7 +22,7 @@ class ShapeDetailsParser {
   private lineDetailsLength = 5;
   private textDetailsLength = 5;
 
-  parseRectangleDetails(unparsedDetails: string[]): RectangleDetails {
+  public parseRectangleDetails(unparsedDetails: string[]): RectangleDetails {
     if (unparsedDetails.length != this.rectangleDetailsLength) {
       throw new Error(
         `Details length for rectangle must be ${this.rectangleDetailsLength}`,
@@ -51,11 +51,11 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [leftTop, rightBottom],
-      color: this.validateHex(unparsedDetails[0]),
+      color: this.validateColorParam(unparsedDetails[0]),
     };
   }
 
-  parseCircleDetails(unparsedDetails: string[]): CircleDetails {
+  public parseCircleDetails(unparsedDetails: string[]): CircleDetails {
     if (unparsedDetails.length != this.circleDetailsLength) {
       throw new Error(
         `Details length for circle must be ${this.circleDetailsLength}`,
@@ -74,12 +74,12 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [center],
-      color: this.validateHex(unparsedDetails[0]),
+      color: this.validateColorParam(unparsedDetails[0]),
       radius,
     };
   }
 
-  parseTriangleDetails(unparsedDetails: string[]): TriangleDetails {
+  public parseTriangleDetails(unparsedDetails: string[]): TriangleDetails {
     if (unparsedDetails.length != this.trinagleDetailsLength) {
       throw new Error(
         `Details length for triangle must be ${this.trinagleDetailsLength}`,
@@ -104,11 +104,11 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [firstVertex, secondVertex, thirdVertex],
-      color: this.validateHex(unparsedDetails[0]),
+      color: this.validateColorParam(unparsedDetails[0]),
     };
   }
 
-  parseLineDetails(unparsedDetails: string[]): LineDetails {
+  public parseLineDetails(unparsedDetails: string[]): LineDetails {
     if (unparsedDetails.length != this.lineDetailsLength) {
       throw new Error(
         `Details length for line must be ${this.lineDetailsLength}`,
@@ -127,11 +127,11 @@ class ShapeDetailsParser {
 
     return {
       controlPoints: [from, to],
-      color: this.validateHex(unparsedDetails[0]),
+      color: this.validateColorParam(unparsedDetails[0]),
     };
   }
 
-  parseTextDetails(unparsedDetails: string[]): TextDetails {
+  public parseTextDetails(unparsedDetails: string[]): TextDetails {
     if (unparsedDetails.length < this.textDetailsLength) {
       throw new Error(
         `Details length for text must be at least${this.textDetailsLength}`,
@@ -151,12 +151,12 @@ class ShapeDetailsParser {
     return {
       controlPoints: [leftTop],
       fontSize,
-      color: this.validateHex(unparsedDetails[0]),
+      color: this.validateColorParam(unparsedDetails[0]),
       text: unparsedDetails.slice(4).join(" "),
     };
   }
 
-  validateIdParam(possibleId: unknown) {
+  public validateIdParam(possibleId: unknown): string {
     if (typeof possibleId !== "string") {
       throw new Error("ID must be a string");
     }
@@ -164,7 +164,7 @@ class ShapeDetailsParser {
     return possibleId;
   }
 
-  validateColorParam(possibleColor: unknown) {
+  private validateColorParam(possibleColor: unknown): string {
     if (typeof possibleColor !== "string") {
       throw new Error("ID must be a string");
     }
@@ -172,7 +172,7 @@ class ShapeDetailsParser {
     return this.validateHex(possibleColor);
   }
 
-  validateHex(possibleHexColor: string) {
+  public validateHex(possibleHexColor: string): string {
     const hexColorRegex = /^#[0-9A-Fa-f]{6}$/;
 
     if (!hexColorRegex.test(possibleHexColor)) {
@@ -184,7 +184,7 @@ class ShapeDetailsParser {
     return possibleHexColor;
   }
 
-  validateShiftParam(possibleShiftParam: unknown) {
+  public validateShiftParam(possibleShiftParam: unknown): number {
     if (typeof possibleShiftParam === "string") {
       const parsedShiftParam = parseInt(possibleShiftParam, 10);
 
@@ -198,7 +198,7 @@ class ShapeDetailsParser {
     }
   }
 
-  parse(details: string[]): IDrawingStrategy {
+  public parse(details: string[]): IDrawingStrategy {
     const shapeType = details[0];
     const shapeDetails = details.slice(1);
 

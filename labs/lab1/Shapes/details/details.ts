@@ -2,6 +2,7 @@ import { Point } from "../point/point";
 
 export interface IShapeDetails {
   color: string;
+  controlPoints: Point[];
 }
 
 export abstract class ShapeDetails implements IShapeDetails {

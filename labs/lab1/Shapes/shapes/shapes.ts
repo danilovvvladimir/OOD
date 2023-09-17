@@ -36,7 +36,8 @@ export namespace Shapes {
   }
 
   export class Picture {
-    private shapes: IShapeMap[] = [];
+    private shapes2: IShapeMap[] = [];
+    private shapes: Map<string, Shape>[] = [];
     private canvas: ICanvas;
 
     constructor(canvas: ICanvas) {
@@ -44,7 +45,7 @@ export namespace Shapes {
     }
 
     private findShapeById(id: string) {
-      return this.shapes.find((sm) => sm.id === id);
+      return this.shapes.find((map) => map.has(id));
     }
 
     addShape(id: string, drawingStategy: IDrawingStrategy): void {
@@ -52,34 +53,46 @@ export namespace Shapes {
         throw new Error("Shape with this id is already exist");
       }
 
-      this.shapes.push({
-        id,
-        shape: new Shape(drawingStategy),
-      });
+      const shapeMap = new Map<string, Shape>();
+      shapeMap.set(id, new Shape(drawingStategy));
+      this.shapes.push(shapeMap);
     }
 
     deleteShape(id: string) {
-      this.shapes = this.shapes.filter((sm) => sm.id !== id);
+      const shapeMap = this.findShapeById(id);
+
+      if (shapeMap) {
+        shapeMap.delete(id);
+        if (shapeMap.size === 0) {
+          const index = this.shapes.indexOf(shapeMap);
+          if (index !== -1) {
+            this.shapes.splice(index, 1);
+          }
+        }
+      }
     }
 
     list() {
       let stringList = "";
-      for (let i = 0; i < this.shapes.length; i++) {
-        stringList =
-          stringList +
-          (i + 1) +
-          " " +
-          this.shapes[i].id +
-          " " +
-          this.shapes[i].shape.getDrawingStrategyInfo() +
-          "\n";
+      let i = 1;
+
+      for (const shapeMap of this.shapes) {
+        for (const [id, shape] of shapeMap) {
+          stringList +=
+            i + " " + id + " " + shape.getDrawingStrategyInfo() + "\n";
+          i++;
+        }
       }
 
       return stringList;
     }
 
     drawPicture() {
-      this.shapes.forEach((item) => item.shape.draw(this.canvas));
+      for (const shapeMap of this.shapes) {
+        for (const shape of shapeMap.values()) {
+          shape.draw(this.canvas);
+        }
+      }
     }
 
     drawShape(id: string) {
@@ -89,7 +102,8 @@ export namespace Shapes {
         throw new Error("Shape with this id doesn't exist");
       }
 
-      shapeMap.shape.draw(this.canvas);
+      const shape = shapeMap.get(id);
+      shape.draw(this.canvas);
     }
 
     changeShape(id: string, newDrawingStategy: IDrawingStrategy) {
@@ -99,7 +113,8 @@ export namespace Shapes {
         throw new Error("Shape with this id doesn't exist");
       }
 
-      shapeMap.shape.setDrawingStrategy(newDrawingStategy);
+      const shape = shapeMap.get(id);
+      shape.setDrawingStrategy(newDrawingStategy);
     }
 
     changeColor(id: string, newColor: string) {
@@ -109,7 +124,8 @@ export namespace Shapes {
         throw new Error("Shape with this id doesn't exist");
       }
 
-      shapeMap.shape.setColor(newColor);
+      const shape = shapeMap.get(id);
+      shape.setColor(newColor);
     }
 
     moveShape(id: string, dx: number, dy: number) {
@@ -119,19 +135,25 @@ export namespace Shapes {
         throw new Error("Shape with this id doesn't exist");
       }
 
-      shapeMap.shape.getControlPoints().forEach((cp) => {
-        cp.setY(cp.getY() + dy);
-        cp.setX(cp.getX() + dx);
-      });
-    }
-
-    movePicture(dx: number, dy: number) {
-      this.shapes.forEach((sm) => {
-        sm.shape.getControlPoints().forEach((cp) => {
+      const shape = shapeMap.get(id);
+      if (shape) {
+        for (const cp of shape.getControlPoints()) {
           cp.setY(cp.getY() + dy);
           cp.setX(cp.getX() + dx);
-        });
-      });
+        }
+      }
+    }
+
+    // не n^3, а n * 1 * n.
+    movePicture(dx: number, dy: number) {
+      for (const shapeMap of this.shapes) {
+        for (const shape of shapeMap.values()) {
+          for (const cp of shape.getControlPoints()) {
+            cp.setY(cp.getY() + dy);
+            cp.setX(cp.getX() + dx);
+          }
+        }
+      }
     }
   }
 }

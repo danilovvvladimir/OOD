@@ -9,7 +9,7 @@ export class CommandHandler {
     private shapeDetailsParser: ShapeDetailsParser = new ShapeDetailsParser(),
   ) {}
 
-  clearConsole() {
+  private clearConsole() {
     this.outputStream.write("\x1B[2J\x1B[H");
   }
 
@@ -21,7 +21,7 @@ export class CommandHandler {
         this.inputStream.destroy();
       } else {
         try {
-          this.handle(input);
+          this.handleCommandLine(input);
         } catch (error) {
           const err = error as Error;
           this.outputStream.write(err.message + "\n");
@@ -34,11 +34,11 @@ export class CommandHandler {
     });
   }
 
-  validateCommandLine(commandLine: string) {
+  private validateCommandLine(commandLine: string) {
     return commandLine.toLowerCase().trim();
   }
 
-  handle(commandLine: string) {
+  private handleCommandLine(commandLine: string) {
     const commandItems = this.validateCommandLine(commandLine).split(" ");
 
     switch (commandItems[0]) {
