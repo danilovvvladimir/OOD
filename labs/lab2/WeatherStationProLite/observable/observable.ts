@@ -24,7 +24,7 @@ export abstract class Observable<T, Event> implements IObservable<T, Event> {
     const data: T = this.getChangedData();
     const currentEvents: Set<Event> = this.getCurrentEvents();
 
-    const observersCopy = this.observers;
+    const observersCopy = this.copyObservers(this.observers);
 
     for (const event of currentEvents) {
       const neededSet = observersCopy.get(event);
@@ -34,6 +34,19 @@ export abstract class Observable<T, Event> implements IObservable<T, Event> {
         });
       }
     }
+
+    this.observers = this.copyObservers(observersCopy);
+  }
+
+  private copyObservers(originalObservers: Map<Event, Set<IObserver<T>>>) {
+    const copiedObservers = new Map<Event, Set<IObserver<T>>>();
+
+    for (const [event, observers] of originalObservers.entries()) {
+      const copiedSet = new Set<IObserver<T>>(observers);
+      copiedObservers.set(event, copiedSet);
+    }
+
+    return copiedObservers;
   }
 
   public removeObserver(observer: IObserver<T>, event: Event): void {

@@ -18,11 +18,22 @@ export abstract class Observable<T> implements IObservable<T> {
   public notifyObservers(): void {
     const data: T = this.getChangedData();
 
-    const observersCopy = this.observers;
+    const copiedObservers = this.copyObservers(this.observers);
 
-    observersCopy.forEach((observer: IObserver<T>) => {
+    copiedObservers.forEach((observer: IObserver<T>) => {
       observer.update(data);
     });
+
+    this.observers = this.copyObservers(copiedObservers);
+  }
+
+  private copyObservers(originalObservers: Set<IObserver<T>>) {
+    const copiedObservers = new Set<IObserver<T>>();
+    for (const observer of originalObservers) {
+      copiedObservers.add(observer);
+    }
+
+    return copiedObservers;
   }
 
   public removeObserver(observer: IObserver<T>): void {

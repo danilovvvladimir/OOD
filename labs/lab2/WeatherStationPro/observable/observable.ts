@@ -22,7 +22,7 @@ export abstract class Observable<T> implements IObservable<T> {
   public notifyObservers(): void {
     const data: T = this.getChangedData();
 
-    const observersCopy = this.observers;
+    const observersCopy = this.copyObservers(this.observers);
 
     const priorities = Array.from(observersCopy.keys()).sort((a, b) => b - a);
 
@@ -31,6 +31,19 @@ export abstract class Observable<T> implements IObservable<T> {
         o.update(data);
       });
     }
+
+    this.observers = this.copyObservers(observersCopy);
+  }
+
+  private copyObservers(originalObservers: Map<number, Set<IObserver<T>>>) {
+    const copiedObservers = new Map<number, Set<IObserver<T>>>();
+
+    for (const [key, observers] of originalObservers.entries()) {
+      const copiedSet = new Set<IObserver<T>>(observers);
+      copiedObservers.set(key, copiedSet);
+    }
+
+    return copiedObservers;
   }
 
   public removeObserver(observer: IObserver<T>): void {
