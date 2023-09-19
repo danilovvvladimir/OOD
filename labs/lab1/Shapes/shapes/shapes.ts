@@ -30,13 +30,7 @@ export namespace Shapes {
     }
   }
 
-  interface IShapeMap {
-    id: string;
-    shape: Shape;
-  }
-
   export class Picture {
-    private shapes2: IShapeMap[] = [];
     private shapes: Map<string, Shape>[] = [];
     private canvas: ICanvas;
 
@@ -50,7 +44,7 @@ export namespace Shapes {
 
     addShape(id: string, drawingStategy: IDrawingStrategy): void {
       if (this.findShapeById(id)) {
-        throw new Error("Shape with this id is already exist");
+        throw new Error("Shape with this id already exists");
       }
 
       const shapeMap = new Map<string, Shape>();

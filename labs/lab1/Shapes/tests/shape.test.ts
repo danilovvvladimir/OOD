@@ -72,7 +72,7 @@ describe("Picture", () => {
 
     expect(() =>
       picture.addShape(shapeId, mockDrawingRectangleStrategy),
-    ).toThrow("Shape with this id is already exist");
+    ).toThrow("Shape with this id already exists");
   });
 
   test("delete should delete existing shape", () => {
