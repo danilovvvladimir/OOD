@@ -11,7 +11,7 @@ export class Point {
   getY() {
     return this.y;
   }
-
+  // todo точки сделать readonly
   setX(newValue: number) {
     this.x = newValue;
   }
