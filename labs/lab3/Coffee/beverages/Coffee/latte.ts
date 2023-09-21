@@ -10,7 +10,7 @@ export class Latte extends Coffee {
   private cost: number;
 
   constructor(lattePortion: LattePortion) {
-    super("Cappuccino");
+    super("Latte");
     switch (lattePortion) {
       case LattePortion.DOUBLE:
         this.latteDescription = "Double";

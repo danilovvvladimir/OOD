@@ -1,6 +1,7 @@
 import { Coffee } from "./beverages/Coffee/coffee";
 import { Latte, LattePortion } from "./beverages/Coffee/latte";
 import { MilkShakeSize, Milkshake } from "./beverages/Milkshake/milkshake";
+import { Chocolate } from "./condiments/chocolate";
 import { Syrup, SyrupType } from "./condiments/syrup";
 
 // const coffee = new Coffee();
@@ -15,10 +16,10 @@ import { Syrup, SyrupType } from "./condiments/syrup";
 // console.log(latte.getCost());
 // console.log(latte.getDescription());
 
-const latteStandartWithChocolateSyrop = new Syrup(
-  new Latte(LattePortion.STANDART),
-  SyrupType.CHOCOLATE,
+const megaLatte = new Chocolate(
+  new Syrup(new Latte(LattePortion.STANDART), SyrupType.CHOCOLATE),
+  5,
 );
 
-console.log(latteStandartWithChocolateSyrop.getDescription());
-console.log(latteStandartWithChocolateSyrop.getCost());
+console.log(megaLatte.getDescription());
+console.log(megaLatte.getCost());
