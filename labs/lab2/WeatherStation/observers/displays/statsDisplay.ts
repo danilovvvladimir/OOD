@@ -30,7 +30,7 @@ export class StatsData {
     return {
       max: this.max,
       min: this.min,
-      average: this.accumulated / this.accumulatedCount,
+      average: this.accumulated / this.accumulatedCount, // деление на 0
     };
   }
 }

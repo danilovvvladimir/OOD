@@ -5,7 +5,8 @@ export interface IObservable<T, Event> {
   removeObserver(observer: IObserver<T>, event: Event): void;
   notifyObservers(): void;
 }
-
+// Сохранить приоритеты
+// Eventtype
 export abstract class Observable<T, Event> implements IObservable<T, Event> {
   // Классы-наследники должны перегрузить данный метод,
   // в котором возвращать информацию об изменениях в объекте

@@ -23,7 +23,7 @@ export abstract class Observable<T> implements IObservable<T> {
     copiedObservers.forEach((observer: IObserver<T>) => {
       observer.update(data);
     });
-
+    // исправить
     this.observers = this.copyObservers(copiedObservers);
   }
 

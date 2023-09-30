@@ -1,5 +1,5 @@
 import { Observable } from "./observable";
-
+// weather info не должен содержать wind info
 export interface WeatherInfo {
   temperature: number;
   humidity: number;

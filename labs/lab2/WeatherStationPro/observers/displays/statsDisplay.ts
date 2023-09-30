@@ -51,6 +51,7 @@ class StatsWindDirectionData {
     return this.average;
   }
 
+  // вынести в отдельные функции
   private degreesToRadians(degrees: number) {
     return degrees * (Math.PI / 180);
   }

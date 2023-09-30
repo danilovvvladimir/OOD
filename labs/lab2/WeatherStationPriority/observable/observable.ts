@@ -12,6 +12,7 @@ export abstract class Observable<T> implements IObservable<T> {
   protected abstract getChangedData(): T;
 
   public registerObserver(observer: IObserver<T>, priority: number): void {
+    // наблюдателя только 1 раз добавлять
     if (!this.observers.has(priority)) {
       this.observers.set(priority, new Set<IObserver<T>>());
     }
@@ -47,6 +48,7 @@ export abstract class Observable<T> implements IObservable<T> {
   }
 
   public removeObserver(observer: IObserver<T>): void {
+    // сделать быстрое  удаление и быстрое удаление
     this.observers.forEach((o) => o.delete(observer));
   }
 
