@@ -7,8 +7,6 @@ export interface IObservable<T> {
 }
 
 export abstract class Observable<T> implements IObservable<T> {
-  // Классы-наследники должны перегрузить данный метод,
-  // в котором возвращать информацию об изменениях в объекте
   protected abstract getChangedData(): T;
 
   public registerObserver(observer: IObserver<T>): void {

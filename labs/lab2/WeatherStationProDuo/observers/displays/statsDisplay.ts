@@ -3,6 +3,7 @@ import {
   WeatherData,
   WeatherInfo,
   WeatherProData,
+  WeatherProInfo,
 } from "../../observable/weatherData";
 import { IObserver } from "../IObserver";
 
@@ -69,6 +70,12 @@ class StatsDataContainer {
   temperatureStats = new StatsData();
   humidityStats = new StatsData();
   pressureStats = new StatsData();
+}
+
+class StatsDataProContainer {
+  temperatureStats = new StatsData();
+  humidityStats = new StatsData();
+  pressureStats = new StatsData();
   windSpeedData = new StatsData();
   windDirectionData = new StatsWindDirectionData();
 }
@@ -77,6 +84,66 @@ export class StatsDisplay implements IObserver<WeatherInfo> {
   private outputStream: NodeJS.WriteStream;
   private dataInContainer: StatsDataContainer;
   private dataOutContainer: StatsDataContainer;
+  private weatherDataIn: WeatherData;
+  private weatherDataOut: WeatherData;
+
+  constructor(
+    weatherDataIn: WeatherData,
+    weatherDataOut: WeatherData,
+    outputStream: NodeJS.WriteStream,
+  ) {
+    this.weatherDataIn = weatherDataIn;
+    this.weatherDataOut = weatherDataOut;
+    this.outputStream = outputStream;
+    this.dataInContainer = new StatsDataContainer();
+    this.dataOutContainer = new StatsDataContainer();
+  }
+
+  public update(data: WeatherInfo, observable: IObservable<WeatherInfo>): void {
+    if (observable === this.weatherDataIn) {
+      this.dataInContainer.temperatureStats.update(data.temperature);
+      this.dataInContainer.humidityStats.update(data.humidity);
+      this.dataInContainer.pressureStats.update(data.pressure);
+
+      this.printDefaultData(this.dataInContainer, "IN");
+    }
+
+    if (observable === this.weatherDataOut) {
+      this.dataOutContainer.temperatureStats.update(data.temperature);
+      this.dataOutContainer.humidityStats.update(data.humidity);
+      this.dataOutContainer.pressureStats.update(data.pressure);
+
+      this.printDefaultData(this.dataOutContainer, "OUT");
+    }
+  }
+
+  private printStats(statsData: StatsData, header: string) {
+    const stats = statsData.getStats();
+
+    this.outputStream.write(`=> ${header}\n`);
+    this.outputStream.write(`Min: ${stats.min}\n`);
+    this.outputStream.write(`Max: ${stats.max}\n`);
+    this.outputStream.write(`Average: ${stats.average}\n`);
+    this.outputStream.write("-----------\n");
+  }
+
+  private printDefaultData(
+    dataContainer: StatsDataContainer,
+    position: string,
+  ) {
+    this.outputStream.write("=== CStatsDisplay info ===\n");
+    this.outputStream.write(`Position: ${position}\n`);
+
+    this.printStats(dataContainer.temperatureStats, "Temperature");
+    this.printStats(dataContainer.humidityStats, "Humidity");
+    this.printStats(dataContainer.pressureStats, "Pressure");
+  }
+}
+
+export class StatsDisplayPro implements IObserver<WeatherProInfo> {
+  private outputStream: NodeJS.WriteStream;
+  private dataInContainer: StatsDataContainer;
+  private dataOutContainer: StatsDataProContainer;
   private weatherDataIn: WeatherData;
   private weatherDataOut: WeatherProData;
 
@@ -89,10 +156,13 @@ export class StatsDisplay implements IObserver<WeatherInfo> {
     this.weatherDataOut = weatherDataOut;
     this.outputStream = outputStream;
     this.dataInContainer = new StatsDataContainer();
-    this.dataOutContainer = new StatsDataContainer();
+    this.dataOutContainer = new StatsDataProContainer();
   }
 
-  public update(data: WeatherInfo, observable: IObservable<WeatherInfo>): void {
+  public update(
+    data: WeatherProInfo,
+    observable: IObservable<WeatherProInfo>,
+  ): void {
     if (observable === this.weatherDataIn) {
       this.dataInContainer.temperatureStats.update(data.temperature);
       this.dataInContainer.humidityStats.update(data.humidity);
@@ -134,7 +204,7 @@ export class StatsDisplay implements IObserver<WeatherInfo> {
     this.printStats(dataContainer.pressureStats, "Pressure");
   }
 
-  private printProData(dataContainer: StatsDataContainer, position: string) {
+  private printProData(dataContainer: StatsDataProContainer, position: string) {
     this.outputStream.write("=== CStatsDisplay info ===\n");
     this.outputStream.write(`Position: ${position}\n`);
 

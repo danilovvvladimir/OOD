@@ -1,11 +1,16 @@
 import { Observable } from "./observable";
-// weather info не должен содержать wind info
+
+// TODO [x]:weather info не должен содержать wind info - раньше optional parametr в WeatherInfo
+// Решил тем, что создал 2 версии каждого дисплея, одна работает с WeatherInfo, другая с WeatherProInfo
+
 export interface WeatherInfo {
   temperature: number;
   humidity: number;
   pressure: number;
+}
 
-  windInfo?: WindInfo;
+export interface WeatherProInfo extends WeatherInfo {
+  windInfo: WindInfo;
 }
 
 interface WindInfo {
@@ -55,14 +60,14 @@ export class WeatherData extends Observable<WeatherInfo> {
   }
 }
 
-export class WeatherProData extends Observable<WeatherInfo> {
+export class WeatherProData extends Observable<WeatherProInfo> {
   private temperature = 0.0;
   private humidity = 0.0;
   private pressure = 760.0;
   private windSpeed = 0;
   private windDirection = 0;
 
-  protected getChangedData(): WeatherInfo {
+  protected getChangedData(): WeatherProInfo {
     return {
       humidity: this.getHumidity(),
       pressure: this.getPressure(),

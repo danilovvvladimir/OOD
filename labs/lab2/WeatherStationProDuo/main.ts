@@ -1,6 +1,5 @@
 import { WeatherData, WeatherProData } from "./observable/weatherData";
-import { Display } from "./observers/displays/display";
-import { StatsDisplay } from "./observers/displays/statsDisplay";
+import { StatsDisplayPro } from "./observers/displays/statsDisplay";
 
 const weatherDataIn = new WeatherData();
 const weatherDataOut = new WeatherProData();
@@ -9,7 +8,7 @@ const weatherDataOut = new WeatherProData();
 // weatherDataIn.registerObserver(display, 100);
 // weatherDataOut.registerObserver(display, 100);
 
-const statsDisplay = new StatsDisplay(
+const statsDisplay = new StatsDisplayPro(
   weatherDataIn,
   weatherDataOut,
   process.stdout,

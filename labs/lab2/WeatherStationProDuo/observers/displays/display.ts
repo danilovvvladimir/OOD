@@ -3,10 +3,46 @@ import {
   WeatherData,
   WeatherInfo,
   WeatherProData,
+  WeatherProInfo,
 } from "../../observable/weatherData";
 import { IObserver } from "../IObserver";
 
 export class Display implements IObserver<WeatherInfo> {
+  private outputStream: NodeJS.WriteStream;
+  private weatherDataIn: WeatherData;
+  private weatherDataOut: WeatherData;
+
+  constructor(
+    weatherDataIn: WeatherData,
+    weatherDataOut: WeatherData,
+    outputStream: NodeJS.WriteStream,
+  ) {
+    this.weatherDataIn = weatherDataIn;
+    this.weatherDataOut = weatherDataOut;
+    this.outputStream = outputStream;
+  }
+
+  public update(data: WeatherInfo, observable: IObservable<WeatherInfo>): void {
+    if (observable === this.weatherDataIn) {
+      this.printDefaultData(data, "IN");
+    }
+
+    if (observable === this.weatherDataOut) {
+      this.printDefaultData(data, "OUT");
+    }
+  }
+
+  private printDefaultData(data: WeatherInfo, position: string) {
+    this.outputStream.write("=== CStatsDisplay info ===\n");
+    this.outputStream.write(`Position: ${position}\n`);
+    this.outputStream.write(`Current Tempetarute: ${data.temperature}\n`);
+    this.outputStream.write(`Current Humidity: ${data.humidity}\n`);
+    this.outputStream.write(`Current Pressure: ${data.pressure}\n`);
+    this.outputStream.write("-----------\n");
+  }
+}
+
+export class DisplayPro implements IObserver<WeatherProInfo> {
   private outputStream: NodeJS.WriteStream;
   private weatherDataIn: WeatherData;
   private weatherDataOut: WeatherProData;
@@ -21,7 +57,10 @@ export class Display implements IObserver<WeatherInfo> {
     this.outputStream = outputStream;
   }
 
-  public update(data: WeatherInfo, observable: IObservable<WeatherInfo>): void {
+  public update(
+    data: WeatherProInfo,
+    observable: IObservable<WeatherProInfo>,
+  ): void {
     if (observable === this.weatherDataIn) {
       this.printDefaultData(data, "IN");
     }
@@ -40,7 +79,7 @@ export class Display implements IObserver<WeatherInfo> {
     this.outputStream.write("-----------\n");
   }
 
-  private printProData(data: WeatherInfo, position: string) {
+  private printProData(data: WeatherProInfo, position: string) {
     this.outputStream.write("=== CStatsDisplay info ===\n");
     this.outputStream.write(`Position: ${position}\n`);
     this.outputStream.write(`Current Tempetarute: ${data.temperature}\n`);

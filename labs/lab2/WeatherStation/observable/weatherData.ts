@@ -22,9 +22,11 @@ export class WeatherData extends Observable<WeatherInfo> {
   getTemperature(): number {
     return this.temperature;
   }
+
   getHumidity(): number {
     return this.humidity;
   }
+
   getPressure(): number {
     return this.pressure;
   }

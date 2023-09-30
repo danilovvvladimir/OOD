@@ -1,6 +1,5 @@
 import { WeatherChangedEvent, WeatherData } from "./observable/weatherData";
 import { Display } from "./observers/displays/display";
-import { StatsDisplay } from "./observers/displays/statsDisplay";
 
 const weatherData = new WeatherData();
 

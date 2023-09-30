@@ -7,43 +7,40 @@ export interface IObservable<T> {
 }
 
 export abstract class Observable<T> implements IObservable<T> {
-  // Классы-наследники должны перегрузить данный метод,
-  // в котором возвращать информацию об изменениях в объекте
   protected abstract getChangedData(): T;
 
   public registerObserver(observer: IObserver<T>, priority: number): void {
+    if (this.isObserverExist(observer)) {
+      return;
+    }
+
     if (!this.observers.has(priority)) {
       this.observers.set(priority, new Set<IObserver<T>>());
     }
 
-    this.observers.get(priority)?.add(observer);
+    this.observers.get(priority).add(observer);
+  }
+
+  private isObserverExist(observer: IObserver<T>): boolean {
+    this.observers.forEach((observerSet) => {
+      if (observerSet.has(observer)) {
+        return true;
+      }
+    });
+
+    return false;
   }
 
   public notifyObservers(): void {
     const data: T = this.getChangedData();
 
-    const observersCopy = this.copyObservers(this.observers);
-
-    const priorities = Array.from(observersCopy.keys()).sort((a, b) => b - a);
+    const priorities = Array.from(this.observers.keys()).sort((a, b) => b - a);
 
     for (const priority of priorities) {
-      observersCopy.get(priority)?.forEach((o) => {
+      this.observers.get(priority)?.forEach((o) => {
         o.update(data);
       });
     }
-
-    this.observers = this.copyObservers(observersCopy);
-  }
-
-  private copyObservers(originalObservers: Map<number, Set<IObserver<T>>>) {
-    const copiedObservers = new Map<number, Set<IObserver<T>>>();
-
-    for (const [key, observers] of originalObservers.entries()) {
-      const copiedSet = new Set<IObserver<T>>(observers);
-      copiedObservers.set(key, copiedSet);
-    }
-
-    return copiedObservers;
   }
 
   public removeObserver(observer: IObserver<T>): void {
