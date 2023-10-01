@@ -1,6 +1,6 @@
-import IOutputDataStream from "./IOutputStream";
+import IOutputStream from "./IOutputStream";
 
-export class CMemoryOutputStream implements IOutputDataStream {
+export class CMemoryOutputStream implements IOutputStream {
   private memory: Buffer;
   private currentIndex: number;
   private size: number;

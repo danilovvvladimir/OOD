@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "fs";
-import IInputDataStream from "./IInputStream";
+import IInputStream from "./IInputStream";
 
-class FileInputStream implements IInputDataStream {
+class FileInputStream implements IInputStream {
   private bytes: Buffer;
   private currentIndex: number = 0;
 

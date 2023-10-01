@@ -3,9 +3,9 @@ import DecompressInputStream from "./Decorators/DecompressInputStream";
 import DecryptInputStream from "./Decorators/DecryptInputStream";
 import EncryptOutputStream from "./Decorators/EncryptOuputStream";
 import FileInputStream from "./InputStream/FileInputStream";
-import IInputDataStream from "./InputStream/IInputStream";
+import IInputStream from "./InputStream/IInputStream";
 import FileOutputStream from "./OutputStream/FileOutputStream";
-import IOutputDataStream from "./OutputStream/IOutputStream";
+import IOutputStream from "./OutputStream/IOutputStream";
 
 enum ArgsOption {
   Encrypt = "--encrypt",
@@ -26,11 +26,11 @@ function main(args: string[]) {
       );
     }
 
-    let inputStream: IInputDataStream = new FileInputStream(
+    let inputStream: IInputStream = new FileInputStream(
       args[args.length - ARGS_FILES_PARAMS_LENGTH],
     );
 
-    let outputStream: IOutputDataStream = new FileOutputStream(
+    let outputStream: IOutputStream = new FileOutputStream(
       args[args.length - (ARGS_FILES_PARAMS_LENGTH - 1)],
     );
 

@@ -1,9 +1,9 @@
-import IInputDataStream from "../InputStream/IInputStream";
+import IInputStream from "../InputStream/IInputStream";
 
-export abstract class InputStreamDecorator implements IInputDataStream {
-  protected inputStream: IInputDataStream;
+export abstract class InputStreamDecorator implements IInputStream {
+  protected inputStream: IInputStream;
 
-  constructor(inputStream: IInputDataStream) {
+  constructor(inputStream: IInputStream) {
     this.inputStream = inputStream;
   }
 

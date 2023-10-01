@@ -1,6 +1,6 @@
-import IInputDataStream from "./IInputStream";
+import IInputStream from "./IInputStream";
 
-export class FileMemoryInputStream implements IInputDataStream {
+export class FileMemoryInputStream implements IInputStream {
   private memory: Buffer;
   private currentIndex: number = 0;
 

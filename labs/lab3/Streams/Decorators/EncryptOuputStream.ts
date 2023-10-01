@@ -1,12 +1,12 @@
 import { shuffle } from "../Common/Shuffle";
-import IOutputDataStream from "../OutputStream/IOutputStream";
+import IOutputStream from "../OutputStream/IOutputStream";
 import { OutputStreamDecorator } from "./OutputStreamDecorator";
 
 class EncryptOutputStream extends OutputStreamDecorator {
   private encryptTable: Map<number, number> = new Map<number, number>();
   private readonly ENCODING_TABLE_LENGTH: number = 256;
 
-  constructor(inputStream: IOutputDataStream, key: number) {
+  constructor(inputStream: IOutputStream, key: number) {
     super(inputStream);
 
     const array: number[] = [];

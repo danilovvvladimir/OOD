@@ -1,9 +1,9 @@
-import IOutputDataStream from "../OutputStream/IOutputStream";
+import IOutputStream from "../OutputStream/IOutputStream";
 
-export abstract class OutputStreamDecorator implements IOutputDataStream {
-  protected outputStream: IOutputDataStream;
+export abstract class OutputStreamDecorator implements IOutputStream {
+  protected outputStream: IOutputStream;
 
-  constructor(outputStream: IOutputDataStream) {
+  constructor(outputStream: IOutputStream) {
     this.outputStream = outputStream;
   }
 

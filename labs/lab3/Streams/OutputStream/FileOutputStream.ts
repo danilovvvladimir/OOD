@@ -1,7 +1,7 @@
-import IOutputDataStream from "./IOutputStream";
+import IOutputStream from "./IOutputStream";
 import { WriteStream, createWriteStream } from "fs";
 
-class FileOutputStream implements IOutputDataStream {
+class FileOutputStream implements IOutputStream {
   private fileOutputStream: WriteStream;
 
   constructor(path: string) {
