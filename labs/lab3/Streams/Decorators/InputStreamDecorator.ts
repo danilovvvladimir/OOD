@@ -7,11 +7,11 @@ export abstract class InputStreamDecorator implements IInputDataStream {
     this.inputStream = inputStream;
   }
 
-  public isEof(): boolean {
-    return this.inputStream.isEof();
+  public isEOF(): boolean {
+    return this.inputStream.isEOF();
   }
 
   public abstract readByte(): Buffer;
 
-  public abstract readBlock(dstBuffer: number[], size: number): number;
+  public abstract readBlock(dstBuffer: number[], dataSize: number): number;
 }

@@ -7,28 +7,29 @@ class CompressOutputStream extends OutputStreamDecorator {
     0,
   );
 
-  public writeByte(byte: Buffer): void {
+  public writeByte(data: Buffer): void {
     if (this.compressedItem.size === 0) {
-      this.compressedItem = new CompressedItem(byte, 1);
+      this.compressedItem = new CompressedItem(data, 1);
+      return;
+    }
+
+    if (this.compressedItem.byte[0] === data[0]) {
+      this.compressedItem.size++;
     } else {
-      if (this.compressedItem.byte[0] === byte[0]) {
-        this.compressedItem.size++;
-      } else {
-        this.outputStream.writeByte(Buffer.from([this.compressedItem.size]));
-        this.outputStream.writeByte(this.compressedItem.byte);
+      this.outputStream.writeByte(Buffer.from([this.compressedItem.size]));
+      this.outputStream.writeByte(this.compressedItem.byte);
 
-        this.compressedItem = new CompressedItem(byte, 1);
-      }
+      this.compressedItem = new CompressedItem(data, 1);
     }
   }
 
-  public writeBlock(block: Buffer, size: number): void {
-    for (let i = 0; i < size; i++) {
-      this.writeByte(Buffer.from([block[i]]));
+  public writeBlock(srcData: Buffer, dataSize: number): void {
+    for (let i = 0; i < dataSize; i++) {
+      this.writeByte(Buffer.from([srcData[i]]));
     }
   }
 
-  public finishTransmitting(): void {
+  public flush(): void {
     if (this.compressedItem.size != 0) {
       this.outputStream.writeByte(Buffer.from([this.compressedItem.size]));
       this.outputStream.writeByte(this.compressedItem.byte);

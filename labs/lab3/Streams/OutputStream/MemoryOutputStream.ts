@@ -1,4 +1,4 @@
-import { IOutputDataStream } from "./IOutputStream";
+import IOutputDataStream from "./IOutputStream";
 
 export class CMemoryOutputStream implements IOutputDataStream {
   private memory: Buffer;
@@ -11,27 +11,27 @@ export class CMemoryOutputStream implements IOutputDataStream {
     this.size = memory.length;
   }
 
-  public writeByte(byte: Buffer): void {
+  public writeByte(data: Buffer): void {
     if (this.currentIndex >= this.size) {
       throw new Error("Memory allocation error. Not enough space in memory");
     }
 
-    for (let i = 0; i < byte.byteLength; i++) {
-      this.memory[this.currentIndex] = byte[i];
+    for (let i = 0; i < data.byteLength; i++) {
+      this.memory[this.currentIndex] = data[i];
       this.currentIndex++;
     }
   }
 
-  public writeBlock(block: Buffer, size: number): void {
-    if (this.currentIndex + size >= this.size) {
+  public writeBlock(srcData: Buffer, dataSize: number): void {
+    if (this.currentIndex + dataSize >= this.size) {
       throw new Error("Memory allocation error. Not enough space in memory");
     }
 
-    for (let i = 0; i < size; i++) {
-      this.memory[this.currentIndex] = block[i];
+    for (let i = 0; i < dataSize; i++) {
+      this.memory[this.currentIndex] = srcData[i];
       this.currentIndex++;
     }
   }
 
-  public finishTransmitting(): void {}
+  public flush(): void {}
 }

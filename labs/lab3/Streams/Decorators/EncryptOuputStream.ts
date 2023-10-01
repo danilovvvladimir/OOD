@@ -1,5 +1,5 @@
 import { shuffle } from "../Common/Shuffle";
-import { IOutputDataStream } from "../OutputStream/IOutputStream";
+import IOutputDataStream from "../OutputStream/IOutputStream";
 import { OutputStreamDecorator } from "./OutputStreamDecorator";
 
 class EncryptOutputStream extends OutputStreamDecorator {
@@ -8,6 +8,7 @@ class EncryptOutputStream extends OutputStreamDecorator {
 
   constructor(inputStream: IOutputDataStream, key: number) {
     super(inputStream);
+
     const array: number[] = [];
     for (let i = 0; i < this.ENCODING_TABLE_LENGTH; i++) {
       array.push(i);
@@ -20,20 +21,21 @@ class EncryptOutputStream extends OutputStreamDecorator {
     }
   }
 
-  public writeByte(byte: Buffer): void {
-    this.outputStream.writeByte(this.encryptByte(byte));
+  public writeByte(data: Buffer): void {
+    this.outputStream.writeByte(this.encryptByte(data));
   }
 
-  public writeBlock(block: Buffer, size: number): void {
-    const newBuffer: Buffer = this.encryptBlock(block, size);
+  public writeBlock(srcData: Buffer, dataSize: number): void {
+    const newBuffer: Buffer = this.encryptBlock(srcData, dataSize);
+
     this.outputStream.writeBlock(newBuffer, newBuffer.length);
   }
 
-  public encryptByte(byte: Buffer): Buffer {
+  private encryptByte(byte: Buffer): Buffer {
     return Buffer.from([this.encryptTable.get(byte[0]) ?? byte[0]]);
   }
 
-  public encryptBlock(block: Buffer, size: number): Buffer {
+  private encryptBlock(block: Buffer, size: number): Buffer {
     const encryptedBuffer = Buffer.alloc(size);
 
     for (let i = 0; i < size; i++) {
@@ -43,7 +45,7 @@ class EncryptOutputStream extends OutputStreamDecorator {
     return encryptedBuffer;
   }
 
-  public finishTransmitting(): void {}
+  public flush(): void {}
 }
 
 export default EncryptOutputStream;

@@ -1,7 +1,7 @@
 interface IInputDataStream {
-  isEof(): boolean;
+  isEOF(): boolean;
   readByte(): Buffer;
-  readBlock(dstBuffer: number[], size: number): number;
+  readBlock(dstBuffer: number[], dataSize: number): number;
 }
 
 export default IInputDataStream;

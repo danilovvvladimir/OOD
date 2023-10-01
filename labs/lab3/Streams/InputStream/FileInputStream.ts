@@ -7,37 +7,37 @@ class FileInputStream implements IInputDataStream {
 
   constructor(path: string) {
     if (!existsSync(path)) {
-      throw new Error(`File on path = "${path}" is not exists`);
+      throw new Error(`File on path = "${path}" doesn't exist`);
     }
 
-    const fileContent: Buffer = readFileSync(path);
-    this.bytes = Buffer.from(fileContent);
+    this.bytes = readFileSync(path);
   }
 
-  public isEof(): boolean {
+  public isEOF(): boolean {
     return this.currentIndex >= this.bytes.length;
   }
 
   public readByte(): Buffer {
-    if (this.isEof()) {
+    if (this.isEOF()) {
       throw new Error("Can not read byte. Detected end of file");
     }
 
     return Buffer.from([this.bytes[this.currentIndex++]]);
   }
 
-  public readBlock(dstBuffer: number[], size: number): number {
-    let i = 0;
-    while (i < size && !this.isEof()) {
+  public readBlock(dstBuffer: number[], dataSize: number): number {
+    let bytesRead = 0;
+
+    while (bytesRead < dataSize && !this.isEOF()) {
       try {
-        dstBuffer[i] = this.readByte()[0];
+        dstBuffer[bytesRead] = this.readByte()[0];
+        bytesRead++;
       } catch (e) {
         throw e;
       }
-      i++;
     }
 
-    return i;
+    return bytesRead;
   }
 }
 

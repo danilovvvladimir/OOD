@@ -31,11 +31,11 @@ class DecryptInputStream extends InputStreamDecorator {
     return this.decryptBlock(dstBuffer, actualSize);
   }
 
-  protected decryptByte(byte: Buffer): Buffer {
+  private decryptByte(byte: Buffer): Buffer {
     return Buffer.from([this.decryptTable.get(byte[0]) ?? byte[0]]);
   }
 
-  protected decryptBlock(block: number[], size: number): number {
+  private decryptBlock(block: number[], size: number): number {
     for (let i = 0; i < size; i++) {
       block[i] = this.decryptTable.get(block[i]) ?? block[i];
     }

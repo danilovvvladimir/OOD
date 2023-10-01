@@ -1,6 +1,6 @@
 import IInputDataStream from "./IInputStream";
 
-export class CFileMemoryInputStream implements IInputDataStream {
+export class FileMemoryInputStream implements IInputDataStream {
   private memory: Buffer;
   private currentIndex: number = 0;
 
@@ -8,20 +8,20 @@ export class CFileMemoryInputStream implements IInputDataStream {
     this.memory = Buffer.from(memory);
   }
 
-  public isEof(): boolean {
+  public isEOF(): boolean {
     return this.currentIndex >= this.memory.length;
   }
 
   public readByte(): Buffer {
-    if (this.isEof()) {
+    if (this.isEOF()) {
       throw new Error("Can not read byte. Detected end of file");
     }
 
     return Buffer.from([this.memory[this.currentIndex++]]);
   }
 
-  public readBlock(dstBuffer: number[], size: number): number {
-    for (let i = 0; i < size; i++) {
+  public readBlock(dstBuffer: number[], dataSize: number): number {
+    for (let i = 0; i < dataSize; i++) {
       try {
         dstBuffer[i] = this.readByte()[0];
       } catch (e) {
@@ -29,6 +29,6 @@ export class CFileMemoryInputStream implements IInputDataStream {
       }
     }
 
-    return size;
+    return dataSize;
   }
 }

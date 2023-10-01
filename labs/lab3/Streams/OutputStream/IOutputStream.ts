@@ -1,5 +1,7 @@
-export interface IOutputDataStream {
+interface IOutputDataStream {
   writeByte(data: Buffer): void;
-  writeBlock(data: Buffer, size: number): void;
-  finishTransmitting(): void;
+  writeBlock(srcData: Buffer, dataSize: number): void;
+  flush(): void;
 }
+
+export default IOutputDataStream;
