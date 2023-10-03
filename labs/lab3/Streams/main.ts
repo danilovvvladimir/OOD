@@ -18,7 +18,7 @@ const DEFAULT_BLOCK_SIZE: number = 4;
 const ARGS_FILES_PARAMS_LENGTH: number = 2;
 const cliArgs: string[] = process.argv.slice(2);
 
-function main(args: string[]) {
+export function main(args: string[]) {
   try {
     if (args.length < ARGS_FILES_PARAMS_LENGTH) {
       throw new Error(
