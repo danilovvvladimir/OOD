@@ -21,7 +21,7 @@ export abstract class Observable<T> implements IObservable<T> {
 
     this.observers.get(priority).add(observer);
   }
-
+  // existObserver
   private isObserverExist(observer: IObserver<T>): boolean {
     this.observers.forEach((observerSet) => {
       if (observerSet.has(observer)) {
