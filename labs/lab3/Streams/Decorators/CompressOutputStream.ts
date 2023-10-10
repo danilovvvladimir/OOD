@@ -15,11 +15,13 @@ class CompressOutputStream extends OutputStreamDecorator {
 
     if (this.compressedItem.byte[0] === data[0]) {
       this.compressedItem.size++;
+      // если будет переполнение счетчика
     } else {
       this.outputStream.writeByte(Buffer.from([this.compressedItem.size]));
       this.outputStream.writeByte(this.compressedItem.byte);
 
       this.compressedItem = new CompressedItem(data, 1);
+      // не пересоздавать
     }
   }
 

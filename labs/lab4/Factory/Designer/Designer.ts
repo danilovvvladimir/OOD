@@ -23,9 +23,7 @@ class Designer implements IDesigner {
         rl.close();
       } else {
         try {
-          pictureDraft.addShape(
-            this.factory.createShape(commandLine.split(" ")),
-          );
+          pictureDraft.addShape(this.factory.createShape(commandLine));
         } catch (error) {
           console.log("Error: " + error.message);
         }

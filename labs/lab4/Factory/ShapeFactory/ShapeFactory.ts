@@ -5,6 +5,7 @@ import Shape from "../Shapes/Shape";
 import Triangle from "../Shapes/Triangle/Triangle";
 import { Color } from "../common/Color";
 import { IShapeFactory } from "./IShapeFactory";
+import ShapeFactoryParser from "./ShapeFactoryParser";
 
 enum AvailableShapes {
   Ellipse = "ellipse",
@@ -13,42 +14,35 @@ enum AvailableShapes {
 }
 
 class ShapeFactory implements IShapeFactory {
-  private readonly INCORRECT_ARGS_COUNT_MESSAGE: string =
-    "Incorrect args count";
+  private readonly EMPTY_ARGS_COUNT_MESSAGE: string = "Args can not be empty";
   private readonly INCORRECT_SHAPE_NAME_MESSAGE: string =
     "Incorrect shape name";
-  private readonly ELLIPSE_ARGS_COUNT: number = 5;
-  private readonly RECTANGLE_ARGS_COUNT: number = 5;
-  private readonly TRIANGLE_ARGS_COUNT: number = 3;
+  private shapeFactoryParser = new ShapeFactoryParser();
 
-  public createShape(description: string[]): Shape {
+  public createShape(description: string): Shape {
     if (description.length < 1) {
-      throw new Error(this.INCORRECT_ARGS_COUNT_MESSAGE);
+      throw new Error(this.EMPTY_ARGS_COUNT_MESSAGE);
     }
 
-    switch (description[0]) {
+    const parsedDescription = this.shapeFactoryParser.parse(description);
+
+    // parse description
+    // shape factory parser
+
+    switch (parsedDescription[0]) {
       case AvailableShapes.Ellipse:
-        if (description.length !== this.ELLIPSE_ARGS_COUNT) {
-          throw new Error(this.INCORRECT_ARGS_COUNT_MESSAGE);
-        }
         return this.createEllipse.apply(
           null,
           description.slice(1, description.length),
         );
 
       case AvailableShapes.Rectangle:
-        if (description.length !== this.RECTANGLE_ARGS_COUNT) {
-          throw new Error(this.INCORRECT_ARGS_COUNT_MESSAGE);
-        }
         return this.createRectangle.apply(
           null,
           description.slice(1, description.length),
         );
 
       case AvailableShapes.Triangle:
-        if (description.length !== this.TRIANGLE_ARGS_COUNT) {
-          throw new Error(this.INCORRECT_ARGS_COUNT_MESSAGE);
-        }
         return this.createTriangle.apply(
           null,
           description.slice(1, description.length),

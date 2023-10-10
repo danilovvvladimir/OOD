@@ -26,6 +26,7 @@ export class Tea extends Beverage {
       case TeaType.MATCHA:
         this.teaDescription = "Matcha";
         break;
+      // обработатть дефолт кейс
     }
   }
 
