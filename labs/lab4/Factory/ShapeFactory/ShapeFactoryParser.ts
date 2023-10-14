@@ -31,7 +31,7 @@ class ShapeFactoryParser {
     "Incorrect args count";
   private readonly INCORRECT_SHAPE_NAME_MESSAGE: string =
     "Incorrect shape name";
-  private readonly ELLIPSE_ARGS_COUNT: number = 5;
+  private readonly ELLIPSE_ARGS_COUNT: number = 6;
   private readonly RECTANGLE_ARGS_COUNT: number = 6;
   private readonly TRIANGLE_ARGS_COUNT: number = 8;
 
