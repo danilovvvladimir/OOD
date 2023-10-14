@@ -7,7 +7,7 @@ import { Color } from "../common/Color";
 import { IShapeFactory } from "./IShapeFactory";
 import ShapeFactoryParser from "./ShapeFactoryParser";
 
-enum AvailableShapes {
+export enum AvailableShapes {
   Ellipse = "ellipse",
   Rectangle = "rectangle",
   Triangle = "triangle",
@@ -24,28 +24,30 @@ class ShapeFactory implements IShapeFactory {
       throw new Error(this.EMPTY_ARGS_COUNT_MESSAGE);
     }
 
-    const parsedDescription = this.shapeFactoryParser.parse(description);
+    const parsedDetails = this.shapeFactoryParser.parse(description);
 
-    // parse description
-    // shape factory parser
-
-    switch (parsedDescription[0]) {
+    switch (parsedDetails.type) {
       case AvailableShapes.Ellipse:
-        return this.createEllipse.apply(
-          null,
-          description.slice(1, description.length),
+        return this.createEllipse(
+          parsedDetails.center,
+          parsedDetails.widthRadius,
+          parsedDetails.heightRadius,
+          parsedDetails.color,
         );
 
       case AvailableShapes.Rectangle:
-        return this.createRectangle.apply(
-          null,
-          description.slice(1, description.length),
+        return this.createRectangle(
+          parsedDetails.leftTop,
+          parsedDetails.rightBottom,
+          parsedDetails.color,
         );
 
       case AvailableShapes.Triangle:
-        return this.createTriangle.apply(
-          null,
-          description.slice(1, description.length),
+        return this.createTriangle(
+          parsedDetails.firstVertex,
+          parsedDetails.secondVertex,
+          parsedDetails.thirdVertex,
+          parsedDetails.color,
         );
 
       default:
@@ -67,6 +69,8 @@ class ShapeFactory implements IShapeFactory {
     rightBottom: Point,
     color: Color,
   ): Rectangle {
+    console.log("rectangle created with", leftTopPoint, rightBottom, color);
+
     return new Rectangle(leftTopPoint, rightBottom, color);
   }
 

@@ -1,4 +1,4 @@
-import * as readline from "readline";
+import * as readlineSync from "readline-sync";
 
 import PictureDraft from "../PictureDraft/PictureDraft";
 import { IShapeFactory } from "../ShapeFactory/IShapeFactory";
@@ -13,14 +13,14 @@ class Designer implements IDesigner {
 
   public createDraft(): PictureDraft {
     const pictureDraft = new PictureDraft();
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
 
-    rl.on("line", (commandLine: string) => {
+    while (true) {
+      const commandLine: string = readlineSync.question(
+        'Enter a command (or type "exit" to quit): ',
+      );
+
       if (commandLine === "exit") {
-        rl.close();
+        break;
       } else {
         try {
           pictureDraft.addShape(this.factory.createShape(commandLine));
@@ -28,7 +28,9 @@ class Designer implements IDesigner {
           console.log("Error: " + error.message);
         }
       }
-    });
+    }
+
+    console.log(pictureDraft.getShapesSize());
 
     return pictureDraft;
   }
