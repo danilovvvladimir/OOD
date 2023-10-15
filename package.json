@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@types/jest": "^29.5.5",
+    "line-by-line": "^0.1.6",
     "readline-sync": "^1.4.10",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2",
