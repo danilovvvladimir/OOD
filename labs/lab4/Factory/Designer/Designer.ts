@@ -30,8 +30,6 @@ class Designer implements IDesigner {
       }
     }
 
-    console.log(pictureDraft.getShapesSize());
-
     return pictureDraft;
   }
 }

@@ -69,8 +69,6 @@ class ShapeFactory implements IShapeFactory {
     rightBottom: Point,
     color: Color,
   ): Rectangle {
-    console.log("rectangle created with", leftTopPoint, rightBottom, color);
-
     return new Rectangle(leftTopPoint, rightBottom, color);
   }
 
