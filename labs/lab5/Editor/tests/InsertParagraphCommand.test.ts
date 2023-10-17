@@ -66,7 +66,7 @@ class CMockDocument implements IDocument {
   save(path: string): void {}
 }
 
-describe("test insert paragraph command", () => {
+describe("Testing insert paragraph command", () => {
   beforeEach(() => {
     insertParagraphMockFunction.mockClear();
     deleteItemMockFunction.mockClear();

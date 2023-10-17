@@ -197,7 +197,7 @@ class TruthyFalsyMockDocument implements IDocument {
   save(path: string): void {}
 }
 
-describe("test undo command", () => {
+describe("Testing undo command", () => {
   beforeEach(() => {
     undoMockFunction.mockClear();
     falsyCanUndoMockFunction.mockClear();

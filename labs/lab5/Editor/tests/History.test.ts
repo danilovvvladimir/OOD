@@ -3,7 +3,7 @@ import SaveCommand from "../Commands/SaveCommand";
 import Document from "../Document/Document";
 import History from "../History/History";
 
-describe("test history", () => {
+describe("Testing history", () => {
   test("History with 1 command. can undo -> true, can redo -> false", () => {
     const history: History = new History();
     const document: Document = new Document(history);

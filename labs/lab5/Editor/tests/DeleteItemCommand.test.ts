@@ -3,7 +3,7 @@ import InsertParagraphCommand from "../Commands/InsertParagraphCommand";
 import Document from "../Document/Document";
 import History from "../History/History";
 
-describe("test delete item command", () => {
+describe("Testing delete item command", () => {
   const log = console.log;
 
   beforeEach(() => {

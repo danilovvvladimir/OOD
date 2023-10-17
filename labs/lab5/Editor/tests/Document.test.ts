@@ -33,7 +33,7 @@ class MockHistory implements IHistory {
   }
 }
 
-describe("test document", () => {
+describe("Testing document", () => {
   test("insertParagraph should insert paragraph correctly", () => {
     const history: IHistory = new History();
     const document: Document = new Document(history);

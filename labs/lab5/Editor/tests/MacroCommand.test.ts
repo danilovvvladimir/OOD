@@ -55,7 +55,7 @@ class MockDocument implements IDocument {
   }
 }
 
-describe("test macrocommand", () => {
+describe("Testing macrocommand", () => {
   beforeEach(() => {
     saveMockFunction.mockClear();
     setTitleMockFunction.mockClear();

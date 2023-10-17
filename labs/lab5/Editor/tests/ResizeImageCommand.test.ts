@@ -4,7 +4,7 @@ import ResizeImageCommand from "../Commands/ResizeImageCommand";
 import Document from "../Document/Document";
 import History from "../History/History";
 
-describe("test resize image command", () => {
+describe("Testing resize image command", () => {
   const log = console.log;
 
   beforeEach(() => {

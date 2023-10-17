@@ -2,7 +2,7 @@ import ListCommand from "../Commands/ListCommand";
 import Document from "../Document/Document";
 import History from "../History/History";
 
-describe("test list command", () => {
+describe("Testing list command", () => {
   const log = console.log;
 
   beforeEach(() => {

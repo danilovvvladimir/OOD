@@ -50,7 +50,7 @@ class CMockDocument implements IDocument {
   save(path: string): void {}
 }
 
-describe("test set title command", () => {
+describe("Testing set title command", () => {
   beforeEach(() => {
     setTitleMockFunction.mockClear();
   });

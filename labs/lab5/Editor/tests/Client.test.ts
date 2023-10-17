@@ -1,7 +1,7 @@
 import LineByLineReader from "line-by-line";
 import Client from "../Client/Client";
 
-describe("test client", () => {
+describe("Testing client", () => {
   const log = console.log;
 
   beforeEach(() => {

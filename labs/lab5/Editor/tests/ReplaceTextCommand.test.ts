@@ -4,7 +4,7 @@ import ReplaceTextCommand from "../Commands/ReplaceTextCommand";
 import Document from "../Document/Document";
 import History from "../History/History";
 
-describe("test replace text command", () => {
+describe("Testing replace text command", () => {
   const log = console.log;
 
   beforeEach(() => {

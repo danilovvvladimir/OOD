@@ -1,7 +1,7 @@
 import HelpCommand from "../Commands/HelpCommand";
 import ICommand from "../Commands/ICommand";
 
-describe("test help command", () => {
+describe("Testing help command", () => {
   const log = console.log;
 
   beforeEach(() => {
