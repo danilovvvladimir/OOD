@@ -20,13 +20,13 @@ import SaveCommand from "../Commands/SaveCommand";
 import Parser from "../Parser/Parser";
 
 class Client {
-  private m_readableStream: LineByLineReader;
+  private readableStream: LineByLineReader;
 
   constructor(stream: LineByLineReader) {
-    this.m_readableStream = stream;
+    this.readableStream = stream;
   }
 
-  public startProcessingStream(): Promise<void> {
+  public run(): Promise<void> {
     const availableCommands: string[] = [
       "InsertParagraph",
       "InsertImage",
@@ -39,66 +39,78 @@ class Client {
       "Undo",
       "Redo",
       "Save",
-      "begin_macro",
-      "end_macro",
+      "BeginMacro",
+      "EndMacro",
       "Exit",
     ];
+
     const macroCommandsMap: Map<string, ICommand> = new Map<string, ICommand>();
     const availableCommandDescriptions: Map<string, string> = new Map<
       string,
       string
     >();
+
     availableCommandDescriptions.set(
       "insertparagraph",
-      "<position>|end <text> — inserts paragraph to position with specific text",
+      "<position> <text> — inserting paragraph",
     );
+
     availableCommandDescriptions.set(
       "insertimage",
-      "<position>|end <width> <height> <path> — inserts image to position with specific path, width and height",
+      "<position> <width> <height> <path> — inserting image",
     );
+
     availableCommandDescriptions.set(
       "settitle",
       "<text> — sets title to the current document",
     );
-    availableCommandDescriptions.set(
-      "list",
-      "shows the list of items of the current document",
-    );
+
+    availableCommandDescriptions.set("list", "shows items in current document");
+
     availableCommandDescriptions.set(
       "replacetext",
-      "<position>|end <text> — replaces text of the paragraph in the specific position",
+      "<position> <text> — replaces text of paragraph",
     );
+
     availableCommandDescriptions.set(
       "resizeimage",
-      "<position>|end <width> <height> — resizes image in the specific position",
+      "<position> <width> <height> — resizes image",
     );
+
     availableCommandDescriptions.set(
       "deleteitem",
-      "<position>|end — deletes item in the specific position",
+      "<position> — deletes item in the specific position",
     );
+
     availableCommandDescriptions.set(
       "help",
       "shows list of available commands",
     );
+
     availableCommandDescriptions.set("undo", "reverts last command");
     availableCommandDescriptions.set("redo", "reverts last reverted command");
     availableCommandDescriptions.set(
       "save",
       "saves document as html file to the specific path",
     );
+
     availableCommandDescriptions.set("exit", "closes the program");
+
     availableCommandDescriptions.set(
-      "begin_macro",
+      "BeginMacro",
       "<macrocommand name> <macrocommand description> — starts recording new macrocommand",
     );
+
     availableCommandDescriptions.set(
-      "end_macro",
+      "EndMacro",
       "stops recording macrocommand",
     );
+
     const helpCommand: ICommand = new HelpCommand(
       availableCommands,
       availableCommandDescriptions,
     );
+
     helpCommand.execute();
 
     const history: IHistory = new History();
@@ -117,8 +129,8 @@ class Client {
       Redo = "redo",
       Save = "save",
       Exit = "exit",
-      BeginMacro = "begin_macro",
-      EndMacro = "end_macro",
+      BeginMacro = "BeginMacro",
+      EndMacro = "EndMacro",
     }
 
     return new Promise<void>((resolve, reject) => {
@@ -391,9 +403,9 @@ class Client {
             break;
         }
       };
-      this.m_readableStream.on("line", processClientsMessages);
-      this.m_readableStream.on("end", () => resolve());
-      this.m_readableStream.on("error", (e) => reject(e));
+      this.readableStream.on("line", processClientsMessages);
+      this.readableStream.on("end", () => resolve());
+      this.readableStream.on("error", (e) => reject(e));
     });
   }
 }

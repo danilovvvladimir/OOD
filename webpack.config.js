@@ -17,7 +17,8 @@ module.exports = {
     // WeatherStationProLite: "./labs/lab2/WeatherStationProLite/main.ts",
     // Coffee: "./labs/lab3/Coffee/main.ts",
     // Streams: "./labs/lab3/Streams/main.ts",
-    Factory: "./labs/lab4/Factory/main.ts",
+    // Factory: "./labs/lab4/Factory/main.ts",
+    Editor: "./labs/lab5/Editor/main.ts",
   },
   output: {
     filename: "[name].bundle.js",
