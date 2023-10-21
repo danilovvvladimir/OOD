@@ -19,6 +19,7 @@ module.exports = {
     // Streams: "./labs/lab3/Streams/main.ts",
     // Factory: "./labs/lab4/Factory/main.ts",
     Editor: "./labs/lab5/Editor/main.ts",
+    ObjectAdapter: "./labs/lab6/ObjectAdapter/main.ts",
   },
   output: {
     filename: "[name].bundle.js",
