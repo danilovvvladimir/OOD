@@ -20,6 +20,7 @@ class ReplaceTextCommand extends AbstractCommand {
     if (this.document.getItemsCount() <= this.position) {
       throw new Error("Incorrect item position");
     }
+
     const documentItem: DocumentItem = this.document.getItem(this.position);
     if (!documentItem.getParagraph()) {
       throw new Error("Item in the position is not a paragraph");

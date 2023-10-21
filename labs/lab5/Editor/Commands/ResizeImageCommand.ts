@@ -28,6 +28,7 @@ class ResizeImageCommand extends AbstractCommand {
     if (this.document.getItemsCount() <= this.position) {
       throw new Error("Incorrect item position");
     }
+
     const documentItem: DocumentItem = this.document.getItem(this.position);
     if (!documentItem.getImage()) {
       throw new Error("Item in the position is not an image");

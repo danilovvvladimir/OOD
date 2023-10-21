@@ -2,7 +2,7 @@ class HTMLLayoutCreator {
   private title: string;
   private layoutText: string[];
 
-  constructor(title: string = "Здесь могла бы быть ваша реклама") {
+  constructor(title: string = "Default title") {
     this.title = title;
     this.layoutText = [];
   }
@@ -53,10 +53,6 @@ class HTMLLayoutCreator {
       "  <title>" +
       this.title +
       "</title>\n" +
-      '  <meta property="og:title" content="Заголовок страницы в OG">\n' +
-      '  <meta property="og:description" content="Описание страницы в OG">\n' +
-      '  <meta property="og:image" content="https://example.com/image.jpg">\n' +
-      '  <meta property="og:url" content="https://example.com/">\n' +
       "</head>\n"
     );
   }

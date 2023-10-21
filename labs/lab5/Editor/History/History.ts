@@ -38,11 +38,14 @@ class History implements IHistory {
 
   public addAndExecuteCommand(command: ICommand): void {
     const newActionIndex: number = this.currentActionIndex + 1;
+
     if (this.commands.length < newActionIndex) {
       this.commands.push(command);
     }
+
     this.commands[newActionIndex] = command;
     this.currentActionIndex = newActionIndex;
+
     command.execute();
   }
 }

@@ -14,10 +14,10 @@ const insertImageMockFunction = jest.fn(
 const deleteItemMockFunction = jest.fn((index: number) => {});
 
 class CMockDocument implements IDocument {
-  private m_items: DocumentItem[];
+  private items: DocumentItem[];
 
   constructor() {
-    this.m_items = [];
+    this.items = [];
   }
 
   insertParagraph(text: string, position: number): IParagraph {
@@ -36,15 +36,15 @@ class CMockDocument implements IDocument {
       position,
     );
 
-    this.m_items.splice(position, 0, new DocumentItem(insertedImage));
+    this.items.splice(position, 0, new DocumentItem(insertedImage));
 
     return insertedImage;
   }
   getItemsCount(): number {
-    return this.m_items.length;
+    return this.items.length;
   }
   getItem(index: number): DocumentItem {
-    return this.m_items[index];
+    return this.items[index];
   }
   deleteItem(index: number): void {
     deleteItemMockFunction(index);
