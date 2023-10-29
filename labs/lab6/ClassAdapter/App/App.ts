@@ -3,15 +3,17 @@ import { ModernGraphicsLib } from "../ModernGraphicsLib/ModernGraphicsLib";
 import { ShapeDrawingLib } from "../ShapeDrawingLib/ShapeDrawingLib";
 
 export namespace app {
-  export class ModernGraphicsRendererAdapter implements GraphicsLib.ICanvas {
+  export class ModernGraphicsRendererAdapter
+    extends ModernGraphicsLib.ModernGraphicsRenderer
+    implements GraphicsLib.ICanvas
+  {
     private currentPoint: ModernGraphicsLib.Point = new ModernGraphicsLib.Point(
       0,
       0,
     );
-    private modernGraphicsRenderer: ModernGraphicsLib.IModernGraphicsRenderer;
 
-    constructor(renderer: ModernGraphicsLib.IModernGraphicsRenderer) {
-      this.modernGraphicsRenderer = renderer;
+    constructor() {
+      super();
     }
 
     public moveTo(x: number, y: number): void {
@@ -24,9 +26,9 @@ export namespace app {
         y,
       );
 
-      this.modernGraphicsRenderer.beginDraw();
-      this.modernGraphicsRenderer.drawLine(this.currentPoint, toPoint);
-      this.modernGraphicsRenderer.endDraw();
+      this.beginDraw();
+      this.drawLine(this.currentPoint, toPoint);
+      this.endDraw();
 
       this.currentPoint = toPoint;
     }
@@ -56,11 +58,8 @@ export namespace app {
   };
 
   export const paintPictureOnModernGraphicsRenderer = (): void => {
-    const renderer: ModernGraphicsLib.IModernGraphicsRenderer =
-      new ModernGraphicsLib.ModernGraphicsRenderer();
-
     const adapter: ModernGraphicsRendererAdapter =
-      new ModernGraphicsRendererAdapter(renderer);
+      new ModernGraphicsRendererAdapter();
 
     const painter: ShapeDrawingLib.CanvasPainter =
       new ShapeDrawingLib.CanvasPainter(adapter);

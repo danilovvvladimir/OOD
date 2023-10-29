@@ -9,6 +9,8 @@ export namespace app {
       0,
     );
     private modernGraphicsRenderer: ModernGraphicsLib.IModernGraphicsRenderer;
+    private RGBAColor: ModernGraphicsLib.RGBAColor =
+      new ModernGraphicsLib.RGBAColor(0, 0, 0, 0);
 
     constructor(renderer: ModernGraphicsLib.IModernGraphicsRenderer) {
       this.modernGraphicsRenderer = renderer;
@@ -25,10 +27,21 @@ export namespace app {
       );
 
       this.modernGraphicsRenderer.beginDraw();
-      this.modernGraphicsRenderer.drawLine(this.currentPoint, toPoint);
+      this.modernGraphicsRenderer.drawLine(
+        this.currentPoint,
+        toPoint,
+        this.RGBAColor,
+      );
       this.modernGraphicsRenderer.endDraw();
 
       this.currentPoint = toPoint;
+    }
+
+    public setColor(rgbColor: number) {
+      const red = (rgbColor & 0xff) / 255;
+      const green = ((rgbColor >> 8) & 0xff) / 255;
+      const blue = ((rgbColor >> 16) & 0xff) / 255;
+      this.RGBAColor = new ModernGraphicsLib.RGBAColor(red, green, blue, 1);
     }
   }
 
@@ -38,10 +51,16 @@ export namespace app {
         new ShapeDrawingLib.Point(10, 15),
         new ShapeDrawingLib.Point(100, 200),
         new ShapeDrawingLib.Point(150, 250),
+        0x43ff64,
       );
 
     const rectangle: ShapeDrawingLib.ICanvasDrawable =
-      new ShapeDrawingLib.CRectangle(new ShapeDrawingLib.Point(30, 40), 18, 24);
+      new ShapeDrawingLib.CRectangle(
+        new ShapeDrawingLib.Point(30, 40),
+        18,
+        24,
+        0x00ff00,
+      );
 
     painter.draw(triangle);
     painter.draw(rectangle);

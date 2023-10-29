@@ -20,6 +20,8 @@ module.exports = {
     // Factory: "./labs/lab4/Factory/main.ts",
     Editor: "./labs/lab5/Editor/main.ts",
     ObjectAdapter: "./labs/lab6/ObjectAdapter/main.ts",
+    ClassAdapter: "./labs/lab6/ClassAdapter/main.ts",
+    ObjectAdapterColor: "./labs/lab6/ObjectAdapterColor/main.ts",
   },
   output: {
     filename: "[name].bundle.js",
