@@ -7,21 +7,7 @@ module.exports = {
   entry: {
     // Прописывай для каждого таска точку входа и имя.
     //  Пример: SimUDuckExtra: "./labs/lab1/SimUDuckExtra/main.ts",
-    // Shapes: "./labs/lab1/Shapes/main.ts",
-    // WeatherStation: "./labs/lab2/WeatherStation/main.ts",
-    // WeatherStationSecure: "./labs/lab2/WeatherStationSecure/main.ts",
-    // WeatherStationPriority: "./labs/lab2/WeatherStationPriority/main.ts",
-    // WeatherStationDuo: "./labs/lab2/WeatherStationDuo/main.ts",
-    // WeatherStationPro: "./labs/lab2/WeatherStationPro/main.ts",
-    // WeatherStationProDuo: "./labs/lab2/WeatherStationProDuo/main.ts",
-    // WeatherStationProLite: "./labs/lab2/WeatherStationProLite/main.ts",
-    // Coffee: "./labs/lab3/Coffee/main.ts",
-    // Streams: "./labs/lab3/Streams/main.ts",
-    // Factory: "./labs/lab4/Factory/main.ts",
-    Editor: "./labs/lab5/Editor/main.ts",
-    ObjectAdapter: "./labs/lab6/ObjectAdapter/main.ts",
-    ClassAdapter: "./labs/lab6/ClassAdapter/main.ts",
-    ObjectAdapterColor: "./labs/lab6/ObjectAdapterColor/main.ts",
+    Slides: "./labs/lab7/Slides/main.ts",
   },
   output: {
     filename: "[name].bundle.js",
@@ -33,6 +19,13 @@ module.exports = {
         test: /\.ts$/,
         use: "ts-loader",
         exclude: /node_modules/,
+      },
+      {
+        test: /\.node$/,
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+        },
       },
     ],
   },
