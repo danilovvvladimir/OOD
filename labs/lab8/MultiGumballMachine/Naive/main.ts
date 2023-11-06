@@ -14,7 +14,7 @@ export namespace naive {
   }
 
   export class GumballMachine implements IGumballMachine {
-    private ballCount: number;
+    private gumballsCount: number;
     private quartersCount: number;
     private currentState: State = State.SoldOut;
 
@@ -25,7 +25,7 @@ export namespace naive {
         throw new Error("Balls count can not be negative number");
       }
 
-      this.ballCount = numBalls;
+      this.gumballsCount = numBalls;
       this.quartersCount = 0;
       this.currentState = numBalls > 0 ? State.NoQuarter : State.SoldOut;
     }
@@ -99,15 +99,15 @@ export namespace naive {
     }
 
     public refill(gumsCount: number): void {
-      this.ballCount = gumsCount;
+      this.gumballsCount = gumsCount;
       this.currentState = gumsCount > 0 ? State.NoQuarter : State.SoldOut;
     }
 
     toString(): string {
       return `Mighty Gumball, Inc.\nTypescript-enabled Standing Gumball Model #2023 (with state)\nInventory: ${
-        this.ballCount
+        this.gumballsCount
       } gumball${
-        this.ballCount !== 1 ? "s" : ""
+        this.gumballsCount !== 1 ? "s" : ""
       }\nMachine is ${this.currentState.toString()}\n`;
     }
 
@@ -115,8 +115,8 @@ export namespace naive {
       switch (this.currentState) {
         case State.Sold:
           console.log("A gumball comes rolling out the slot");
-          --this.ballCount;
-          if (this.ballCount == 0) {
+          --this.gumballsCount;
+          if (this.gumballsCount == 0) {
             console.log("Oops, out of gumballs");
             this.currentState = State.SoldOut;
           } else {

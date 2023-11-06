@@ -8,8 +8,20 @@ class NoQuarterState implements IState {
     this.gumballMachine = gumballMachine;
   }
 
+  public refill(gumballsCount: number): void {
+    console.log("Gums count has been successfully changed");
+
+    this.gumballMachine.setGumballsCount(gumballsCount);
+
+    if (gumballsCount <= 0) {
+      this.gumballMachine.setSoldOutState();
+    }
+  }
+
   public insertQuarter(): void {
     console.log("You inserted a quarter");
+
+    this.gumballMachine.addQuarter();
     this.gumballMachine.setHasQuarterState();
   }
 

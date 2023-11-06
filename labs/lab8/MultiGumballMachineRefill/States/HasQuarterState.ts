@@ -8,6 +8,15 @@ class HasQuarterState implements IState {
     this.gumballMachine = gumballMachine;
   }
 
+  public refill(gumballsCount: number): void {
+    console.log("Gums count has been successfully changed");
+
+    this.gumballMachine.setGumballsCount(gumballsCount);
+    if (gumballsCount <= 0) {
+      this.gumballMachine.setSoldOutState();
+    }
+  }
+
   public insertQuarter(): void {
     if (
       this.gumballMachine.getQuartersCount() ===
@@ -15,7 +24,7 @@ class HasQuarterState implements IState {
     ) {
       console.log("You can't insert another quarter.");
     } else {
-      console.log("You inserted another quarter");
+      console.log("You can't insert another one quarter");
       this.gumballMachine.addQuarter();
     }
   }

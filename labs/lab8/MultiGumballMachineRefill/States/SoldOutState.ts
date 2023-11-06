@@ -13,7 +13,12 @@ class SoldOutState implements IState {
   }
 
   public ejectQuarter(): void {
-    console.log("You can't eject, you haven't inserted a quarter yet");
+    if (this.gumballMachine.getQuartersCount() !== 0) {
+      console.log("Quarters ejected");
+      this.gumballMachine.resetQuarters();
+    } else {
+      console.log("You can't eject, you haven't inserted a quarter yet");
+    }
   }
 
   public turnCrank(): void {
@@ -22,6 +27,21 @@ class SoldOutState implements IState {
 
   public dispense(): void {
     console.log("No gumball dispensed");
+  }
+
+  public refill(gumballsCount: number): void {
+    console.log("Gumballs count has been successfully changed");
+    if (gumballsCount === 0) {
+      return;
+    }
+
+    this.gumballMachine.setGumballsCount(gumballsCount);
+
+    if (this.gumballMachine.getQuartersCount() > 0) {
+      this.gumballMachine.setHasQuarterState();
+    } else {
+      this.gumballMachine.setNoQuarterState();
+    }
   }
 
   public toString(): string {

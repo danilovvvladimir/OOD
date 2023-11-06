@@ -6,69 +6,69 @@ import SoldState from "../States/SoldState";
 import IGumballMachine from "./IGumballMachine";
 
 class GumballMachine implements IGumballMachine {
-  private count: number = 0;
+  private gumballsCount: number = 0;
   private currentState: IState;
 
   constructor(numBalls: number) {
-    this.count = numBalls;
+    this.gumballsCount = numBalls;
 
     if (numBalls < 0) {
-      throw new Error("Balls count can not be negative number");
+      throw new Error("Balls gumballsCount can not be negative number");
     }
 
-    if (this.count > 0) {
+    if (this.gumballsCount > 0) {
       this.setNoQuarterState();
     } else {
       this.setSoldOutState();
     }
   }
 
-  ejectQuarter(): void {
+  public ejectQuarter(): void {
     this.currentState.ejectQuarter();
   }
 
-  insertQuarter(): void {
+  public insertQuarter(): void {
     this.currentState.insertQuarter();
   }
 
-  turnCrank(): void {
+  public turnCrank(): void {
     this.currentState.turnCrank();
     this.currentState.dispense();
   }
 
-  toString(): string {
+  public toString(): string {
     return `Mighty Gumball, Inc.\nTypescript-enabled Standing Gumball Model #2023 (with state)\nInventory: ${
-      this.count
+      this.gumballsCount
     } gumball${
-      this.count !== 1 ? "s" : ""
+      this.gumballsCount !== 1 ? "s" : ""
     }\nMachine is ${this.currentState.toString()}\n`;
   }
 
-  setSoldOutState(): void {
+  public setSoldOutState(): void {
     this.currentState = new SoldOutState(this);
   }
 
-  setNoQuarterState(): void {
+  public setNoQuarterState(): void {
     this.currentState = new NoQuarterState(this);
   }
 
-  setSoldState(): void {
+  public setSoldState(): void {
     this.currentState = new SoldState(this);
   }
 
-  setHasQuarterState(): void {
+  public setHasQuarterState(): void {
     this.currentState = new HasQuarterState(this);
   }
 
-  releaseBall(): void {
-    if (this.count > 0) {
+  public releaseBall(): void {
+    if (this.gumballsCount > 0) {
       console.log("A gumball comes rolling out the slot...");
-      this.count--;
+      this.gumballsCount--;
     }
   }
 
-  getBallsCount(): number {
-    return this.count;
+  public getGumballsCount(): number {
+    return this.gumballsCount;
   }
 }
 

@@ -204,17 +204,17 @@ Machine is waiting for turning the crank
   });
 });
 
-describe("GumballMachine getBallsCount cases", () => {
-  test("getBallsCount on gumball machine with 0 balls should return 0", () => {
+describe("GumballMachine getGumballsCount cases", () => {
+  test("getGumballsCount on gumball machine with 0 balls should return 0", () => {
     const gumballMachine: GumballMachine = new GumballMachine(0);
 
-    expect(gumballMachine.getBallsCount()).toBe(0);
+    expect(gumballMachine.getGumballsCount()).toBe(0);
   });
 
-  test("getBallsCount on gumball machine with 5 balls should return 5", () => {
+  test("getGumballsCount on gumball machine with 5 balls should return 5", () => {
     const gumballMachine: GumballMachine = new GumballMachine(5);
 
-    expect(gumballMachine.getBallsCount()).toBe(5);
+    expect(gumballMachine.getGumballsCount()).toBe(5);
   });
 });
 

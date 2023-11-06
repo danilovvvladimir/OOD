@@ -35,6 +35,12 @@ class SoldState implements IState {
     }
   }
 
+  public refill(gumballsCount: number): void {
+    console.log(
+      "Can not change number of gumballs's while delivering a gumball",
+    );
+  }
+
   public toString(): string {
     return "delivering a gumball";
   }

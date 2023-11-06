@@ -9,9 +9,8 @@ module.exports = {
     //  Пример: SimUDuckExtra: "./labs/lab1/SimUDuckExtra/main.ts",
     // Slides: "./labs/lab7/Slides/main.ts",
     GumballMachine: "./labs/lab8/GumballMachine/main.ts",
-    MultiGumballMachineState:
-      "./labs/lab8/MultiGumballMachine/StatePattern/main.ts",
-    MultiGumballMachineNaive: "./labs/lab8/MultiGumballMachine/Naive/main.ts",
+    MultiGumballMachine: "./labs/lab8/MultiGumballMachine/main.ts",
+    MultiGumballMachineRefill: "./labs/lab8/MultiGumballMachineRefill/main.ts",
   },
   output: {
     filename: "[name].bundle.js",

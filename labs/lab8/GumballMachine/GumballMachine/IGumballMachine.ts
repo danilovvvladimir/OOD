@@ -1,6 +1,6 @@
 interface IGumballMachine {
   releaseBall(): void;
-  getBallsCount(): number;
+  getGumballsCount(): number;
 
   setSoldOutState(): void;
   setNoQuarterState(): void;

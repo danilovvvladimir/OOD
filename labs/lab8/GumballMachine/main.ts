@@ -5,32 +5,33 @@ function testGumballMachine(gumballMachine: GumballMachine): void {
 
   gumballMachine.insertQuarter();
   gumballMachine.turnCrank();
-
-  console.log(gumballMachine.toString());
-
-  gumballMachine.insertQuarter();
-  gumballMachine.ejectQuarter();
   gumballMachine.turnCrank();
 
-  console.log(gumballMachine.toString());
+  // console.log(gumballMachine.toString());
 
-  gumballMachine.insertQuarter();
-  gumballMachine.turnCrank();
-  gumballMachine.insertQuarter();
-  gumballMachine.turnCrank();
-  gumballMachine.ejectQuarter();
+  // gumballMachine.insertQuarter();
+  // gumballMachine.ejectQuarter();
+  // gumballMachine.turnCrank();
 
-  console.log(gumballMachine.toString());
+  // console.log(gumballMachine.toString());
 
-  gumballMachine.insertQuarter();
-  gumballMachine.insertQuarter();
-  gumballMachine.turnCrank();
-  gumballMachine.insertQuarter();
-  gumballMachine.turnCrank();
-  gumballMachine.insertQuarter();
-  gumballMachine.turnCrank();
+  // gumballMachine.insertQuarter();
+  // gumballMachine.turnCrank();
+  // gumballMachine.insertQuarter();
+  // gumballMachine.turnCrank();
+  // gumballMachine.ejectQuarter();
 
-  console.log(gumballMachine.toString());
+  // console.log(gumballMachine.toString());
+
+  // gumballMachine.insertQuarter();
+  // gumballMachine.insertQuarter();
+  // gumballMachine.turnCrank();
+  // gumballMachine.insertQuarter();
+  // gumballMachine.turnCrank();
+  // gumballMachine.insertQuarter();
+  // gumballMachine.turnCrank();
+
+  // console.log(gumballMachine.toString());
 }
 
 function testGumballMachineWithState(): void {

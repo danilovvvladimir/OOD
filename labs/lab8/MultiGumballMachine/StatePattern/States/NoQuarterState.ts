@@ -8,25 +8,35 @@ class NoQuarterState implements IState {
     this.gumballMachine = gumballMachine;
   }
 
-  insertQuarter(): void {
-    console.log("You inserted a quarter");
-    this.gumballMachine.addQuarter();
-    this.gumballMachine.setHasQuarterState();
+  public insertQuarter(): void {
+    if (
+      this.gumballMachine.getQuartersCount() ===
+      this.gumballMachine.getQuartersLimit()
+    ) {
+      console.log(
+        "You can't insert another quarter. The Limit is " +
+          this.gumballMachine.getQuartersLimit(),
+      );
+    } else {
+      console.log("You inserted a quarter");
+      this.gumballMachine.addQuarter();
+      this.gumballMachine.setHasQuarterState();
+    }
   }
 
-  ejectQuarter(): void {
+  public ejectQuarter(): void {
     console.log("You haven't inserted a quarter");
   }
 
-  turnCrank(): void {
+  public turnCrank(): void {
     console.log("You turned but there's no quarter");
   }
 
-  dispense(): void {
+  public dispense(): void {
     console.log("You need to pay first");
   }
 
-  toString(): string {
+  public toString(): string {
     return "waiting for quarter";
   }
 }

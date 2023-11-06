@@ -41,6 +41,22 @@ class GumballMachine implements IGumballMachine {
     this.currentState = new HasQuarterState(this);
   }
 
+  public setGumballsCount(gumballsCount: number): void {
+    if (gumballsCount < 0) {
+      throw new Error("gumballsCount can not be negative number");
+    } else {
+      this.gumballsCount = gumballsCount;
+    }
+  }
+
+  public refill(gumballsCount: number): void {
+    this.currentState.refill(gumballsCount);
+  }
+
+  public getGumballsCount(): number {
+    return this.gumballsCount;
+  }
+
   public getQuartersLimit(): number {
     return this.QUARTERS_LIMIT;
   }
@@ -89,10 +105,6 @@ class GumballMachine implements IGumballMachine {
       console.log("A gumball comes rolling out the slot...");
       this.gumballsCount--;
     }
-  }
-
-  public getGumballsCount(): number {
-    return this.gumballsCount;
   }
 
   public toString(): string {

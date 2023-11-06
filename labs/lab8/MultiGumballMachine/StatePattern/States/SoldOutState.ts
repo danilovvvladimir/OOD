@@ -8,11 +8,11 @@ class SoldOutState implements IState {
     this.gumballMachine = gumballMachine;
   }
 
-  insertQuarter(): void {
+  public insertQuarter(): void {
     console.log("You can't insert a quarter, the machine is sold out");
   }
 
-  ejectQuarter(): void {
+  public ejectQuarter(): void {
     if (this.gumballMachine.getQuartersCount() !== 0) {
       console.log("Quarters ejected");
       this.gumballMachine.resetQuarters();
@@ -21,15 +21,15 @@ class SoldOutState implements IState {
     }
   }
 
-  turnCrank(): void {
+  public turnCrank(): void {
     console.log("You turned but there's no gumballs");
   }
 
-  dispense(): void {
+  public dispense(): void {
     console.log("No gumball dispensed");
   }
 
-  toString(): string {
+  public toString(): string {
     return "sold out";
   }
 }

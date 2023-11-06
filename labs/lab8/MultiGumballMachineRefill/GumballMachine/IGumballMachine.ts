@@ -12,6 +12,8 @@ interface IGumballMachine {
   setNoQuarterState(): void;
   setSoldState(): void;
   setHasQuarterState(): void;
+
+  setGumballsCount(gumballsCount: number): void;
 }
 
 export default IGumballMachine;

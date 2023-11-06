@@ -8,25 +8,25 @@ class HasQuarterState implements IState {
     this.gumballMachine = gumballMachine;
   }
 
-  insertQuarter(): void {
+  public insertQuarter(): void {
     console.log("You can't insert another one quarter");
   }
 
-  ejectQuarter(): void {
+  public ejectQuarter(): void {
     console.log("Quarter ejected successfully");
     this.gumballMachine.setNoQuarterState();
   }
 
-  turnCrank(): void {
+  public turnCrank(): void {
     console.log("You turned the crank");
     this.gumballMachine.setSoldState();
   }
 
-  dispense(): void {
+  public dispense(): void {
     console.log("You need to insert a quarter first");
   }
 
-  toString(): string {
+  public toString(): string {
     return "waiting for turning the crank";
   }
 }
