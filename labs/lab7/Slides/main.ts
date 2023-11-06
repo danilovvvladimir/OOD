@@ -17,73 +17,91 @@ import Slide from "./Slide/Slide";
 const slide: ISlide = new Slide();
 const canvas: ICanvas = new CCanvas(1000, 1000);
 
-const leftEye: IShape = new Ellipse(
-  new Frame(70, 70, 30, 30),
-  new LineStyle(new RGBAColor(255, 255, 0, 1), 3),
-  new FillStyle(new RGBAColor(0, 0, 0, 0), false),
+const ellipse1 = new Ellipse(
+  new Frame(100, 100, 100, 100),
+  new LineStyle(new RGBAColor(144, 69, 205, 1), 3),
+  new FillStyle(new RGBAColor(0, 0, 0, 0.5), true),
   new Point(100, 100),
   30,
   30,
 );
-const rightEye: IShape = new Ellipse(
-  new Frame(870, 70, 30, 30),
-  new LineStyle(new RGBAColor(255, 255, 0, 1), 3),
-  new FillStyle(new RGBAColor(0, 0, 0, 0), false),
-  new Point(900, 100),
+
+const ellipse2 = new Ellipse(
+  new Frame(100, 100, 100, 100),
+  new LineStyle(new RGBAColor(69, 69, 205, 1), 3),
+  new FillStyle(new RGBAColor(0, 0, 0, 0.5), true),
+  new Point(200, 200),
   30,
   30,
 );
-const eyes: IShapeGroup = new ShapeGroup(new Frame(70, 70, 860, 30));
-eyes.insertShape(leftEye, 0);
-eyes.insertShape(rightEye, 1);
-eyes.insertShape(eyes, 2);
-const eyebrow: IShape = new Rectangle(
+
+const ellipses = new ShapeGroup(new Frame(100, 100, 200, 200));
+
+ellipses.insertShape(ellipse1, 0);
+ellipses.insertShape(ellipse2, 1);
+
+// Разный LineStyle = undefined
+// Same FillStyle = 0 0 0 0.5
+console.log("Shapes in ellipses group:", ellipses.getShapesCount());
+
+console.log("Shapesgroup fill style #1:", ellipses.getFillStyle()?.getColor());
+console.log("Shapesgroup line style #1:", ellipses.getLineStyle()?.getColor());
+
+ellipses.setFrame(new Frame(100, 100, 400, 400));
+ellipses.setFillStyle(new FillStyle(new RGBAColor(69, 140, 245, 1), true));
+ellipses.setLineStyle(new LineStyle(new RGBAColor(69, 140, 245, 1)));
+
+console.log("*Fill styles changed*");
+console.log("Shapesgroup fill style #2:", ellipses.getFillStyle()?.getColor());
+console.log("Shapesgroup line style #2:", ellipses.getLineStyle()?.getColor());
+
+ellipses
+  .getShapeAtIndex(0)
+  .setFillStyle(new FillStyle(new RGBAColor(140, 140, 140, 1), true));
+
+const rectangle = new Rectangle(
   new Frame(250, 100, 500, 30),
   new LineStyle(new RGBAColor(0, 0, 0, 1), 3),
-  new FillStyle(new RGBAColor(0, 0, 0, 0), false),
+  new FillStyle(new RGBAColor(50, 110, 240, 1), true),
   new Point(250, 100),
   500,
   30,
 );
-const nostrils: IShape = new Triangle(
+
+const triangle = new Triangle(
   new Frame(400, 250, 200, 100),
-  new LineStyle(new RGBAColor(255, 255, 0, 1), 3),
-  new FillStyle(new RGBAColor(255, 255, 0, 0), false),
-  [new Point(400, 250), new Point(600, 250), new Point(500, 350)],
-);
-const mouth: IShape = new Ellipse(
-  new Frame(200, 450, 300, 50),
-  new LineStyle(new RGBAColor(255, 0, 0, 1), 3),
-  new FillStyle(new RGBAColor(255, 255, 0, 0), false),
-  new Point(500, 500),
-  300,
-  50,
+  new LineStyle(new RGBAColor(255, 255, 120, 1), 3),
+  new FillStyle(new RGBAColor(140, 255, 70, 1), true),
+  [new Point(400, 250), new Point(600, 250), new Point(500, 150)],
 );
 
-// Примеры изменения состояний фигур относительно координатной сетки
-mouth.setFrame(new Frame(200, 450, 100, 100));
-// nostrils.setFrame(new Frame(500, 150, 400, 200));
-// eyebrow.setFrame(new Frame(50, 100, 700, 30));
-// eyes.setFrame(new Frame(0, 0, 860, 30));
-// Мариец
-eyes.setFrame(new Frame(70, 70, 860, 5));
+// slide.addShape(ellipses);
+// slide.addShape(rectangle);
+// slide.addShape(triangle);
 
-slide.addShape(eyes);
-slide.addShape(nostrils);
-slide.addShape(mouth);
+const allShapes = new ShapeGroup(new Frame(100, 100, 600, 600));
 
-const style = eyes.getLineStyle();
-console.log(style.getColor()?.toString());
-eyes.insertShape(eyebrow, 3);
-console.log(style.getColor()?.toString());
-console.log(eyes.getLineStyle().getColor()?.toString());
+allShapes.insertShape(ellipses, 0);
+allShapes.insertShape(rectangle, 1);
+allShapes.insertShape(triangle, 2);
+
+allShapes.setFrame(new Frame(100, 100, 800, 800));
+allShapes.setFillStyle(new FillStyle(new RGBAColor(140, 69, 205, 1), true));
+
+allShapes
+  .getShapeAtIndex(0)
+  .getGroup()
+  .getShapeAtIndex(0)
+  .setFillStyle(new FillStyle(new RGBAColor(50, 110, 240, 1), true));
+
+slide.addShape(allShapes);
 
 slide.draw(canvas);
 
 canvas
   .saveToPng("image.png")
   .then(() => {
-    console.log("Successfully executed");
+    console.log("Image successfully created");
   })
   .catch((e) => {
     console.log(String(e));

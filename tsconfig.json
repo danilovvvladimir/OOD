@@ -12,6 +12,10 @@
     "rootDir": ".",
     "esModuleInterop": true
   },
-  "include": ["labs/**/*.ts"],
+  "include": [
+    "labs/**/*.ts",
+    "labs/**/*.node",
+    "node_modules/canvas/build/Release/canvas.node"
+  ],
   "exclude": ["node_modules"]
 }

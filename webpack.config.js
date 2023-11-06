@@ -8,6 +8,7 @@ module.exports = {
     // Прописывай для каждого таска точку входа и имя.
     //  Пример: SimUDuckExtra: "./labs/lab1/SimUDuckExtra/main.ts",
     Slides: "./labs/lab7/Slides/main.ts",
+    // Slides1: "./labs/lab8/main.ts",
   },
   output: {
     filename: "[name].bundle.js",
@@ -30,7 +31,10 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: [".ts", ".js", ".node"],
+  },
+  externals: {
+    canvas: "commonjs canvas",
   },
   plugins: [new CleanWebpackPlugin()],
 };
