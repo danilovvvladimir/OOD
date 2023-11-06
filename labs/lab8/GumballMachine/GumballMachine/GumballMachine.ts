@@ -11,6 +11,11 @@ class GumballMachine implements IGumballMachine {
 
   constructor(numBalls: number) {
     this.count = numBalls;
+
+    if (numBalls < 0) {
+      throw new Error("Balls count can not be negative number");
+    }
+
     if (this.count > 0) {
       this.setNoQuarterState();
     } else {
