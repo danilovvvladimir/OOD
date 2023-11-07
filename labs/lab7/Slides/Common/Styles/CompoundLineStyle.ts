@@ -1,5 +1,5 @@
 import { IShapeEnumerable } from "../../Shapes/IShapeEnumerable";
-import ShapeEnumerator from "../../Shapes/ShapeEnumerable";
+import ShapeEnumerator from "../../Shapes/ShapeEnumerator";
 import RGBAColor from "../RGBAColor";
 import ILineStyle from "./ILineStyle";
 

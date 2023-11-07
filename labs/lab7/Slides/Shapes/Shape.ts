@@ -5,7 +5,6 @@ import FillStyle from "../Common/Styles/FillStyle";
 import IFillStyle from "../Common/Styles/IFillStyle";
 import ILineStyle from "../Common/Styles/ILineStyle";
 import LineStyle from "../Common/Styles/LineStyle";
-import IShapeGroup from "../ShapeGroup/IShapeGroup";
 import IShape from "./IShape";
 
 abstract class Shape implements IShape {
@@ -69,10 +68,6 @@ abstract class Shape implements IShape {
         hasFilling,
       );
     }
-  }
-
-  public getGroup(): IShapeGroup {
-    return undefined;
   }
 
   abstract draw(canvas: ICanvas): void;

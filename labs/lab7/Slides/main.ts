@@ -5,10 +5,8 @@ import Point from "./Common/Point";
 import RGBAColor from "./Common/RGBAColor";
 import FillStyle from "./Common/Styles/FillStyle";
 import LineStyle from "./Common/Styles/LineStyle";
-import IShapeGroup from "./ShapeGroup/IShapeGroup";
 import ShapeGroup from "./ShapeGroup/ShapeGroup";
 import Ellipse from "./Shapes/Ellipse";
-import IShape from "./Shapes/IShape";
 import Rectangle from "./Shapes/Rectangle";
 import Triangle from "./Shapes/Triangle";
 import ISlide from "./Slide/ISlide";
@@ -87,12 +85,6 @@ allShapes.insertShape(triangle, 2);
 
 allShapes.setFrame(new Frame(100, 100, 800, 800));
 allShapes.setFillStyle(new FillStyle(new RGBAColor(140, 69, 205, 1), true));
-
-allShapes
-  .getShapeAtIndex(0)
-  .getGroup()
-  .getShapeAtIndex(0)
-  .setFillStyle(new FillStyle(new RGBAColor(50, 110, 240, 1), true));
 
 slide.addShape(allShapes);
 

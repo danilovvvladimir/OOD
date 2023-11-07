@@ -7,7 +7,7 @@ import IFillStyle from "../Common/Styles/IFillStyle";
 import ILineStyle from "../Common/Styles/ILineStyle";
 import LineStyle from "../Common/Styles/LineStyle";
 import IShape from "../Shapes/IShape";
-import ShapeEnumerator from "../Shapes/ShapeEnumerable";
+import ShapeEnumerator from "../Shapes/ShapeEnumerator";
 import IShapeGroup from "./IShapeGroup";
 
 class ShapeGroup implements IShapeGroup {
@@ -72,10 +72,6 @@ class ShapeGroup implements IShapeGroup {
     this.shapes.forEach((shape: IShape) => {
       shape.draw(canvas);
     });
-  }
-
-  public getGroup(): IShapeGroup {
-    return this;
   }
 
   public getShapesCount(): number {
