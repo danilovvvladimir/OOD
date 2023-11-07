@@ -22,7 +22,7 @@ class HasQuarterState implements IState {
       this.gumballMachine.getQuartersCount() ===
       this.gumballMachine.getQuartersLimit()
     ) {
-      console.log("You can't insert another quarter.");
+      console.log("You can't insert another quarter");
     } else {
       console.log("You can't insert another one quarter");
       this.gumballMachine.addQuarter();

@@ -15,7 +15,7 @@ export namespace app {
     constructor() {
       super();
     }
-
+    // begin draw вызывать один раз и end draw
     public moveTo(x: number, y: number): void {
       this.currentPoint = new ModernGraphicsLib.Point(x, y);
     }

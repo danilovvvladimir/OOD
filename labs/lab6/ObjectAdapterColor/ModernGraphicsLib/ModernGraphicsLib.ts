@@ -10,6 +10,7 @@ export namespace ModernGraphicsLib {
   }
 
   export class RGBAColor {
+    //readonly поля
     public r: number;
     public g: number;
     public b: number;

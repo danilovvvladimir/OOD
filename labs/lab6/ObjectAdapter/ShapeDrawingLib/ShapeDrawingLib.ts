@@ -6,7 +6,7 @@ export namespace ShapeDrawingLib {
       this.x = x;
       this.y = y;
     }
-
+    // readonly
     public x: number;
     public y: number;
   }

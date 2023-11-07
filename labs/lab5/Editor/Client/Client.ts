@@ -97,12 +97,12 @@ class Client {
     availableCommandDescriptions.set("exit", "closes the program");
 
     availableCommandDescriptions.set(
-      "BeginMacro",
+      "beginmacro",
       "<macrocommand name> <macrocommand description> — starts recording new macrocommand",
     );
 
     availableCommandDescriptions.set(
-      "EndMacro",
+      "endmacro",
       "stops recording macrocommand",
     );
 
@@ -129,8 +129,8 @@ class Client {
       Redo = "redo",
       Save = "save",
       Exit = "exit",
-      BeginMacro = "BeginMacro",
-      EndMacro = "EndMacro",
+      BeginMacro = "beginmacro",
+      EndMacro = "endmacro",
     }
 
     return new Promise<void>((resolve, reject) => {

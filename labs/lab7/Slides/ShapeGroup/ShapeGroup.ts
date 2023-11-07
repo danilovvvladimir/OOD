@@ -10,6 +10,7 @@ import IShape from "../Shapes/IShape";
 import ShapeEnumerator from "../Shapes/ShapeEnumerator";
 import IShapeGroup from "./IShapeGroup";
 
+// Фрейм группы не возвращается актуальным
 class ShapeGroup implements IShapeGroup {
   private frame: Frame;
   private lineStyle: ILineStyle;

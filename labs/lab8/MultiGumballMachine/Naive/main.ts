@@ -1,9 +1,9 @@
 export namespace naive {
   enum State {
-    SoldOut, // Жвачка закончилась
-    NoQuarter, // Нет монетки
-    HasQuarter, // Есть монетка
-    Sold, // Монетка выдана
+    SoldOut = "sold out", // Жвачка закончилась
+    NoQuarter = "no quarter", // Нет монетки
+    HasQuarter = "has quarter", // Есть монетка
+    Sold = "sold", // Монетка выдана
   }
 
   export interface IGumballMachine {
@@ -98,17 +98,12 @@ export namespace naive {
       }
     }
 
-    public refill(gumsCount: number): void {
-      this.gumballsCount = gumsCount;
-      this.currentState = gumsCount > 0 ? State.NoQuarter : State.SoldOut;
-    }
-
-    toString(): string {
+    public toString(): string {
       return `Mighty Gumball, Inc.\nTypescript-enabled Standing Gumball Model #2023 (with state)\nInventory: ${
         this.gumballsCount
-      } gumball${
-        this.gumballsCount !== 1 ? "s" : ""
-      }\nMachine is ${this.currentState.toString()}\n`;
+      } gumball${this.gumballsCount !== 1 ? "s" : ""}\nQuarters: ${
+        this.quartersCount
+      }\nMachine is in ${this.currentState.toString()} state\n`;
     }
 
     private dispense(): void {
@@ -135,6 +130,10 @@ export namespace naive {
           console.log("No gumball dispensed");
           break;
       }
+    }
+
+    public getQuartersLimit(): number {
+      return this.QUARTERS_LIMIT;
     }
   }
 }

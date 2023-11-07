@@ -100,7 +100,7 @@ class GumballMachine implements IGumballMachine {
       this.gumballsCount
     } gumball${this.gumballsCount !== 1 ? "s" : ""}\nQuarters: ${
       this.quartersCount
-    } \nMachine is ${this.currentState.toString()}\n`;
+    }\nMachine is ${this.currentState.toString()}\n`;
   }
 }
 
