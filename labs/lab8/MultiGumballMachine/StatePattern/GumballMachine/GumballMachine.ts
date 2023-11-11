@@ -15,7 +15,7 @@ class GumballMachine implements IGumballMachine {
     this.gumballsCount = numBalls;
 
     if (numBalls < 0) {
-      throw new Error("gumballsCount can not be negative number");
+      throw new Error("Balls count can not be negative number");
     }
 
     if (this.gumballsCount > 0) {
