@@ -9,7 +9,7 @@ class NoQuarterState implements IState {
   }
 
   public refill(gumballsCount: number): void {
-    console.log("Gums count has been successfully changed");
+    console.log("Gumballs count has been successfully changed");
 
     this.gumballMachine.setGumballsCount(gumballsCount);
 
