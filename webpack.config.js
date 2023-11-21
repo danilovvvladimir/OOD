@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     // Прописывай для каждого таска точку входа и имя.
     //  Пример: SimUDuckExtra: "./labs/lab1/SimUDuckExtra/main.ts",
-    Slides: "./labs/lab7/Slides/main.ts",
+    // Slides: "./labs/lab7/Slides/main.ts",
     GumballMachine: "./labs/lab8/GumballMachine/main.ts",
     MultiGumballMachine: "./labs/lab8/MultiGumballMachine/main.ts",
     MultiGumballMachineRefill: "./labs/lab8/MultiGumballMachineRefill/main.ts",

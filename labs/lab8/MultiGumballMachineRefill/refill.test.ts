@@ -39,7 +39,7 @@ Machine is waiting for quarter
     expect(receivedBallsCountChangeString).toBe(expectedBallsCountChangeString);
     expect(expectedStateString).toBe(receivedStateString);
   });
-
+  // проверить классы состояний
   test("Refill machine, that already have gumballs", () => {
     const gumballMachine = new GumballMachine(3);
     const newGumballsCount: number = 18;

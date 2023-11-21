@@ -36,7 +36,7 @@ describe("GumballMachine empty balls", () => {
     gumballMachine.setHasQuarterState();
 
     gumballMachine.releaseBall();
-
+    // тестировать что именно вывела
     expect(console.log).toBeCalledTimes(0);
   });
 

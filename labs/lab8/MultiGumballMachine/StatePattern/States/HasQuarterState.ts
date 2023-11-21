@@ -27,6 +27,7 @@ class HasQuarterState implements IState {
   }
 
   public turnCrank(): void {
+    // Почему может быть 0 монеток
     if (this.gumballMachine.getQuartersCount() !== 0) {
       console.log("You turned the crank");
       this.gumballMachine.removeQuarter();

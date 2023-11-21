@@ -35,6 +35,7 @@ Machine is waiting for turning the crank
 
   test("Put 3 quarters and turn the crank 3 times, machine should be sold out after turns", () => {
     gumballMachine.insertQuarter();
+    // проверить промежуточное состояние
     gumballMachine.insertQuarter();
     gumballMachine.insertQuarter();
 

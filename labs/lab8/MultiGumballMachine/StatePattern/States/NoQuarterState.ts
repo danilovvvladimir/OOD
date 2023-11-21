@@ -9,6 +9,7 @@ class NoQuarterState implements IState {
   }
 
   public insertQuarter(): void {
+    //Убрать лишнюю проверку
     if (
       this.gumballMachine.getQuartersCount() ===
       this.gumballMachine.getQuartersLimit()

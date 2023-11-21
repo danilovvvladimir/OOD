@@ -13,6 +13,7 @@ class HasQuarterState implements IState {
 
     this.gumballMachine.setGumballsCount(gumballsCount);
     if (gumballsCount <= 0) {
+      // исправить проверку
       this.gumballMachine.setSoldOutState();
     }
   }
